@@ -1,32 +1,32 @@
-article{
-    display: flex;
-    flex-direction: column;
+header{
+    display:flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-family: Roboto, sans-serif;
-    font-size: 1.5rem;
-    text-align: center;
-    padding: 0 1rem;
+    padding: 1em 2em;
+    background-color: var(--yellow);
+    color: rgba(228 228 228 / 87%);
 
-    & a{
+    a{
+        text-decoration: none;
+        color: var(--font-white);
+    }
+
+    & a.button{
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 0.5em;
         padding: 15px 1em;
-        background-color: var(--font-white);
+        background-color: transparent;
         border: 0.5px solid var(--font-white);
         border-radius: 6px;
-        color: var(--font-black);
-        font-size: 1em;
+        font-size: 1.5em;
         font-family: 'Dancing Script', cursive;
-        text-decoration: none;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
 
         &:hover{
-            background-color:transparent;
+            background-color:var(--font-white);
             color: var(--yellow);
         }
     }

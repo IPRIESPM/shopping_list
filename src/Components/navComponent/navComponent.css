@@ -1,0 +1,24 @@
+nav{
+    display: flex;
+    justify-content: center;
+    padding: 1em 2em;
+
+    & a{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        padding: 15px 1em;
+        background-color: transparent;
+        color:var(--font-white);
+        text-decoration: none;
+        font-size: 1.5em;
+        font-family: 'Dancing Script', cursive;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover{
+            color: var(--yellow);
+        }
+    }
+}

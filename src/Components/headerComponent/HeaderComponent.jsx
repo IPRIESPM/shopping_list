@@ -1,22 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './headerComponent.css';
 import { PersonHeart } from 'react-bootstrap-icons';
-import './homePage.css';
 
-function HomePage() {
+function HeaderComponent() {
   return (
-    <article>
-      <h1>Hungry</h1>
-      <p>
-        Tu asistente inteligente para
-        las compras del supermercado
-      </p>
+    <header>
+      <Link to="/">
+        <h1>Hungry</h1>
+      </Link>
       <Link to="/login" className="button">
         <PersonHeart />
         Iniciar sesión
       </Link>
-    </article>
+    </header>
   );
 }
 
-export default HomePage;
+export default HeaderComponent;
