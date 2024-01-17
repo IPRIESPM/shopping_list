@@ -1,0 +1,13 @@
+section.product-page {
+  display: flex;
+  align-items: center;
+
+  & h1{
+    display: flex;
+    place-items: center;
+    gap: 1.5rem;
+    font-family: "Dancing Script", cursive;
+    font-size: 2.4em;
+    text-align: center;
+  }
+}

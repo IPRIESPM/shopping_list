@@ -1,14 +1,22 @@
 header{
     display:flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     padding: 1em 2em;
+    padding-bottom: 30px;
     background-color: var(--yellow);
     color: rgba(228 228 228 / 87%);
 
     a{
         text-decoration: none;
         color: var(--font-white);
+
+        & h1{
+            /* borde de texto */
+            -webkit-text-stroke: 1px var(--font-white);
+            font-size: 4em;
+        }
+
     }
 
     & a.button{
@@ -24,10 +32,30 @@ header{
         font-family: 'Dancing Script', cursive;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+  
 
         &:hover{
             background-color:var(--font-white);
             color: var(--yellow);
+        }
+    }
+
+    & button{
+        padding: 15px 1em;
+        font-size: 2em;
+        font-family: 'Dancing Script', cursive;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        background-color: var(--font-white);
+        color: var(--yellow);
+        border: 0.5px solid var(--font-white);
+        border-radius: 6px;
+        -webkit-text-stroke: 1px var(--yellow);
+
+        &:hover{
+            background-color: transparent;
+            color: var(--font-white);
+            -webkit-text-stroke: 1px var(--font-white);
         }
     }
 }

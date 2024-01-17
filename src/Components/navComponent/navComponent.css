@@ -21,4 +21,8 @@ nav{
             color: var(--yellow);
         }
     }
+
+    &.active{
+      border-bottom: 0.5px solid var(--yellow);
+    }
 }

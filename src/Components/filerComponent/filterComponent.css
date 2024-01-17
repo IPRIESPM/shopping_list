@@ -1,0 +1,74 @@
+form.filter-component {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 90vw;
+    border: none;
+
+    & fieldset {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      border: none;
+
+      & input{
+        padding: 1.8em 0;
+      }
+
+      & select {
+        border: none;
+        border-bottom: 1px solid var(--yellow);
+        padding: 15px 1em;
+        background-color: transparent;
+        color: var(--font-white);
+        text-decoration: none;
+        font-size: 1.5em;
+        font-family: "Dancing Script", cursive;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        & option {
+          font-family:  Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+          font-size: 0.8em;
+          background-color: var(--font-white);
+          color: var(--font-black);
+        }
+      }
+    }
+
+    & p{
+      display: flex;
+      place-items: center;
+      gap: 1rem;
+      font-family: "Dancing Script", cursive;
+      font-size: 1.5em;
+      color: var(--font-white);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+  
+    & button{
+      display: flex;
+      place-items: center;
+      gap: 1rem;
+      font-family: "Dancing Script", cursive;
+      font-size: 1.5em;
+      color: var(--font-white);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+  
+      &:hover{
+        color: var(--yellow);
+      }
+    }
+  }

@@ -18,3 +18,10 @@ h1 {
   font-size: 3.2em;
   font-family: 'Dancing Script', cursive;
 }
+
+
+h2{
+  margin:0;
+  font-size: 2.5em;
+  font-family: 'Dancing Script', cursive;
+}
