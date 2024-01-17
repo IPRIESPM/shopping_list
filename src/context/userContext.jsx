@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import useUser from '../hoocks/useUser';
 
 const UserContext = createContext();
@@ -18,8 +18,8 @@ function UserProvider({ children }) {
     clearUser();
   };
 
-  const logIn = (email) => {
-    logUser(email);
+  const logIn = (data) => {
+    logUser(data);
   };
 
   // Creamos un objeto con los valores que queremos compartir

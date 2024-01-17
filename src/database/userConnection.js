@@ -1,21 +1,21 @@
 import supabase from './supabase';
 
-const login = async (email) => {
-  console.log(supabase);
-  // Función asíncrona para iniciar sesión con el usuario.
-  await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      // La URL se especifica en el servidor, pero es posible cambiarla.
-      emailRedirectTo: 'http://localhost:5173/inicio',
-    },
-  });
+const logInSubmitted = async (data) => {
+  // Función para iniciar sesión.
+  const { email, password } = data;
+
+  supabase.auth
+    .signIn({ email, password })
+    .then((response) => {
+      alert(JSON.stringify(response));
+    })
+    .catch((err) => {
+      alert(err.response.text);
+    });
 };
 
-const getUser = async () => {
-  // Función asíncrona para obtener el usuario.
-  const user = await supabase.auth.user();
-  return user;
+const fetchUserDetails = () => {
+  alert(JSON.stringify(supabase.auth.user()));
 };
 
-export { login, getUser };
+export { logInSubmitted, fetchUserDetails };

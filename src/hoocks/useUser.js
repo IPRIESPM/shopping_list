@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import { useEffect, useState } from 'react';
-import { login, getUser } from '../database/userConnection';
+import { logInSubmitted, fetchUserDetails } from '../database/userConnection';
 
 const useUser = () => {
   const [user, setUser] = useState(false);
@@ -12,24 +12,10 @@ const useUser = () => {
     setUser([]);
   };
 
-  const logUser = async (email) => {
-    login(email);
+  const logUser = async (data) => {
+    await logInSubmitted(data);
+    await fetchUserDetails();
   };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        setError(false);
-        const supabaseUser = await getUser();
-        setUser(supabaseUser);
-      } catch (supabaseError) {
-        setError('true');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
 
   return {
     user, loading, error, clearUser, logUser,
