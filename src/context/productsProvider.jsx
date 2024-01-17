@@ -68,13 +68,13 @@ function ProductsProvider({ children }) {
   const obtainProducts = async () => {
     let data;
     if (orderNumeric) {
-      let test = parseFloat(search, 10);
+      let searchFloat = parseFloat(search, 10);
 
-      if (Number.isNaN(test) || search === '') {
-        test = 0;
+      if (Number.isNaN(searchFloat) || search === '') {
+        searchFloat = 0;
       }
 
-      data = await getProductsNumeric(filter, filterAscending, order, test);
+      data = await getProductsNumeric(filter, filterAscending, order, searchFloat);
     } else {
       data = await getProducts(filter, filterAscending, order, search);
     }

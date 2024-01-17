@@ -54,7 +54,7 @@ const getProducts = async (filter, ascending, order, search) => {
     .from('product')
     .select('*')
     .order(order, { ascending })
-    .filter(filter, 'ilike', `%${search}%`);
+    .filter(filter, 'ilike', `${search}%`);
 
   if (error) {
     return false;
