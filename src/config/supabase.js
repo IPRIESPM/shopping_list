@@ -10,8 +10,8 @@ import { createClient } from '@supabase/supabase-js';
 */
 
 const supabaseConexion = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_KEY,
+  'https://xnhqzxacjsxwapmsgogl.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuaHF6eGFjanN4d2FwbXNnb2dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDUxNTgzODMsImV4cCI6MjAyMDczNDM4M30.5JMZwjTZkZFGHUu15aX37Rvz4lF1Zw-OkLsyLZCzRMs',
 );
 
 /*
