@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import './productListComponent.css';
@@ -20,11 +21,11 @@ function ProductListComponent({ products, precioMedio }) {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            <ProductComponent
-              product={product}
-              goToProductPage={goToProductPage}
-            />
+            <button type="button" className="product" onClick={goToProductPage(product.id)}>
+              <ProductComponent product={product} />
+            </button>
           </li>
+
         ))}
       </ul>
       <hr />

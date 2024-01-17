@@ -97,7 +97,7 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    document.title = 'Iniciar sesión';
+    document.title = 'Iniciar sesión - Hungry';
 
     return () => {
       document.title = 'Hungry';

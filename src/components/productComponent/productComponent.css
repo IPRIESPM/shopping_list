@@ -1,20 +1,13 @@
-button.product{
+section.product{
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-direction: row;
     gap: 1em;
-    width: 20vw;
     min-width: max-content;
     border: none;
     border-bottom: 1px solid var(--font-black);
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
     background-color: transparent;
     font-size: 1em;
     color: var(--font-white);
-
-    &:hover{
-        border-bottom: 1px solid var(--yellow);
-        transition: all 0.6s ease-in-out;
-    }
 }

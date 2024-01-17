@@ -2,7 +2,7 @@
 import React from 'react';
 import './productComponent.css';
 
-function ProductComponent({ product, goToProductPage }) {
+function ProductComponent({ product }) {
   let updatedImage = product.image;
   let updatedName = product.name;
   if (!updatedImage) {
@@ -11,7 +11,7 @@ function ProductComponent({ product, goToProductPage }) {
   }
 
   return (
-    <button type="button" className="product" onClick={goToProductPage(product.id)}>
+    <section className="product">
       <img src={updatedImage} alt={updatedName} />
       <p>
         {product.name}
@@ -24,7 +24,8 @@ function ProductComponent({ product, goToProductPage }) {
         {product.weight}
         u.
       </p>
-    </button>
+    </section>
+
   );
 }
 export default ProductComponent;

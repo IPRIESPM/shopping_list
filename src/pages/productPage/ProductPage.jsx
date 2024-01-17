@@ -30,7 +30,7 @@ function ProductPage() {
 
   // al desmontar el componente, cambiamos el título de la página.
   useEffect(() => {
-    document.title = 'Productos';
+    document.title = 'Productos - Hungry';
 
     return () => {
       document.title = 'Hungry';
