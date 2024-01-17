@@ -1,8 +1,15 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import './productListComponent.css';
+import { useNavigate } from 'react-router-dom';
+import ProductComponent from '../productComponent/ProductComponent';
 
 function ProductListComponent({ products, precioMedio }) {
+  const navigate = useNavigate();
+
+  const goToProductPage = (id) => () => {
+    navigate(`/products/${id}`);
+  };
   /*
     Aquí simplemente mostramos los productos
     y el precio medio.
@@ -13,8 +20,10 @@ function ProductListComponent({ products, precioMedio }) {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            <b>{product.name}</b>
-            {` -  ${product.weight}u. - ${product.price}€`}
+            <ProductComponent
+              product={product}
+              goToProductPage={goToProductPage}
+            />
           </li>
         ))}
       </ul>
