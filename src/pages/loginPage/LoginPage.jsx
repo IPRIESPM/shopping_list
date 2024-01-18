@@ -7,6 +7,7 @@ import './loginPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
 import { getFormData, validateEmail } from '../../utils/utils';
+import ErrorComponent from '../../components/errorComponent/ErrorComponent';
 
 function LoginPage() {
   // Preparamos los estados
@@ -107,16 +108,16 @@ function LoginPage() {
   return (
     <section className="loginPage">
       <h1>Iniciar sesión</h1>
-      { errorLogin}
+
       {!user && !loading && (
         <form onSubmit={handleSubmit}>
           <fieldset>
-            <legend>isaacjulianpavon.alu@iespacomolla.es</legend>
+
             <label htmlFor="email">
               <EnvelopeAtFill />
               <input type="email" id="email" name="email" placeholder="usuario@usuario" />
             </label>
-            <legend>isaacjulianpavon.alu@iespacomolla.es</legend>
+
             <label htmlFor="password">
               <PersonFillLock />
               <input type="password" id="password" name="password" placeholder="contraseña" />
@@ -128,19 +129,17 @@ function LoginPage() {
 
       {loading && (
         <section className="loading">
-          <h1>Cargando...</h1>
+          <p>Cargando...</p>
         </section>
       )}
 
       {errorLogin && (
-        <section className="error">
-          <h1>Ha ocurrido un error</h1>
-        </section>
+        <ErrorComponent message="Error al iniciar sesión" />
       )}
 
       {user && !errorLogin && (
         <section className="login-success">
-          <h1>Inicio correcto</h1>
+          <p>Inicio correcto</p>
           <Link to="/products">Ver productos</Link>
         </section>
       )}

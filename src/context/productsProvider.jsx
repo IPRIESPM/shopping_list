@@ -6,12 +6,14 @@ import React, {
 } from 'react';
 
 import { getProducts, getProductsNumeric } from '../config/supabase';
+import { createProduct, findProductById, updateProduct } from '../controller/product';
 
 const ProductsContext = createContext();
 
 function ProductsProvider({ children }) {
   // Preparamos los estados
   const [products, setProduct] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [filter, setFilter] = useState('name');
   const [filterAscending, setFilterAscending] = useState(true);
   const [orderNumeric, setOrderNumeric] = useState(false);
@@ -122,7 +124,26 @@ function ProductsProvider({ children }) {
 
   useEffect(() => {
     obtainProducts();
-  }, [order, filterAscending, filter, search]);
+  }, [order, filterAscending, filter, search, selectedProduct]);
+
+  const selectProductById = async (id) => {
+    if (!id) {
+      setSelectedProduct(null);
+      return;
+    }
+    const product = await findProductById(id);
+    setSelectedProduct(product);
+  };
+
+  const updateSelectedProduct = async (product) => {
+    const result = await updateProduct(product);
+    return result;
+  };
+
+  const createNewProduct = async (product) => {
+    const result = await createProduct(product);
+    return result;
+  };
 
   // Creamos un objeto con los valores que queremos compartir
   const values = {
@@ -133,11 +154,15 @@ function ProductsProvider({ children }) {
     search,
     order,
     error,
+    selectedProduct,
+    updateSelectedProduct,
+    selectProductById,
     precioMedio,
     changeFilterAscending,
     selectOrder,
     selectFilter,
     selectSearch,
+    createNewProduct,
   };
 
   // Retornamos el contexto con los valores

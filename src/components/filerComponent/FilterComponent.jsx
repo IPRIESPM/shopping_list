@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import {
-  FunnelFill, SortDown, SortUp,
+  FunnelFill, PlusCircle, SortDown, SortUp,
 } from 'react-bootstrap-icons';
 import './filterComponent.css';
+import { Link } from 'react-router-dom';
 import { ProductsContext } from '../../context/productsProvider';
 
 function FilterComponent() {
@@ -25,6 +26,10 @@ function FilterComponent() {
           {filterAscending ? <SortUp /> : <SortDown />}
         </button>
       </fieldset>
+      <Link to="/products/new">
+        Añadir producto
+        <PlusCircle />
+      </Link>
       <fieldset>
         <p>
           <FunnelFill />

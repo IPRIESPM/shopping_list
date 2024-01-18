@@ -11,7 +11,7 @@ section{
         align-items: center;
         justify-content: center;
         gap: 1em;
-        padding: 1em;
+        padding: 2em 1em;
         border: 0.5px solid var(--font-white);
         border-radius: 5px;
         color: var(--font-white);
@@ -41,7 +41,7 @@ section{
             outline:none;
             border: none;
             padding: 0 0.5em;
-            border-radius: 5px;
+            border-radius: 2px;
             border-bottom: 1px solid var(--font-white);
             font-size: 16px;
             color: var(--font-white);
@@ -61,6 +61,7 @@ section{
         font-family: 'Dancing Script', cursive;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+        color: var(--font-black);
 
         &:hover{
             background-color:transparent;

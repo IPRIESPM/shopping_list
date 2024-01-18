@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Pencil, Trash2 } from 'react-bootstrap-icons';
+import { Pencil, PencilFill, Trash2 } from 'react-bootstrap-icons';
 import { ProductsContext } from '../../../context/productsProvider';
 import { UserContext } from '../../../context/userContext';
 import ProductComponent from '../../../components/productComponent/ProductComponent';
@@ -10,53 +10,85 @@ import ProductFormComponent from '../../../components/productFormComponent/Produ
 
 function ProductDetailPage() {
   const { id } = useParams();
-  const defaultProduct = {
-    name: 'producto no encontrado',
-  };
-  const { products } = useContext(ProductsContext);
+  const { selectedProduct, selectProductById } = useContext(ProductsContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState(defaultProduct);
   const [editMode, setEditMode] = useState(false);
-  const findSelectedProduct = () => products.find((product) => product.id === id);
+  const [createMode, setCreateMode] = useState(false);
+
   const handleEdit = () => {
     setEditMode(!editMode);
   };
 
+  const exitEditMode = () => {
+    setEditMode(false);
+  };
+
+  const exitCreateMode = () => {
+    setCreateMode(false);
+  };
+
   useEffect(() => {
-    const product = findSelectedProduct();
-    if (!product) {
-      navigate('/products');
+    if (id === 'new') {
+      document.title = 'Nuevo producto - Hungry';
+      setCreateMode(true);
     } else {
-      setSelectedProduct(findSelectedProduct());
-      document.title = `Ficha de ${product.name} - Hungry`;
+      const product = selectProductById(id);
+      if (!product) {
+        navigate('/products');
+      } else {
+        document.title = `Ficha de ${product.name} - Hungry`;
+      }
     }
     return () => {
       document.title = 'Hungry';
+      selectProductById(null);
     };
-  }, []);
+  }, [id, navigate, selectProductById]);
 
   useEffect(() => {
-    // Si el usuario no está logueado, lo redirigimos al login.
     if (!user) {
       navigate('/login');
     }
-  }, [user]);
+  }, [user, navigate]);
+
+  useEffect(() => {
+    if (id !== 'new') selectProductById(id);
+  }, [editMode, createMode, id, selectProductById]);
 
   return (
     <section className="product-detail-page">
-      {user && (
-      <>
-        <h1>{`Ficha de ${selectedProduct.name}`}</h1>
+      {user && selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
+      {user && createMode && <h1> Nueva ficha de producto</h1>}
+      {user && selectedProduct && (
         <section className="product-detail">
           {!editMode && <ProductComponent product={selectedProduct} />}
-          {editMode && <ProductFormComponent /> }
+          {editMode && (
+            <ProductFormComponent
+              product={selectedProduct}
+              exitEditMode={exitEditMode}
+            />
+          )}
           <section className="options">
-            <button type="button"><Trash2 /></button>
-            <button type="button" onClick={handleEdit}><Pencil /></button>
+            {!editMode && (
+              <button type="button">
+                <Trash2 />
+              </button>
+            )}
+
+            <button type="button" onClick={handleEdit}>
+              {!editMode ? <Pencil /> : <PencilFill />}
+            </button>
           </section>
         </section>
-      </>
+      )}
+
+      {user && createMode && (
+        <ProductFormComponent
+          product={null}
+          exitEditMode={exitEditMode}
+          exitCreateMode={exitCreateMode}
+        />
       )}
     </section>
   );
