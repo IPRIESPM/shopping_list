@@ -2,7 +2,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Pencil, PencilFill, Trash2 } from 'react-bootstrap-icons';
-import { ProductsContext } from '../../../context/productsProvider';
+import { ProductsContext } from '../../../context/productsContext';
 import { UserContext } from '../../../context/userContext';
 import ProductComponent from '../../../components/productComponent/ProductComponent';
 import './productDetailPage.css';
@@ -44,17 +44,17 @@ function ProductDetailPage() {
       document.title = 'Hungry';
       selectProductById(null);
     };
-  }, [id, navigate]);
+  }, [id]);
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, []);
 
   useEffect(() => {
     if (id !== 'new') selectProductById(id);
-  }, [editMode, createMode, id]);
+  }, [id]);
 
   return (
     <section className="product-detail-page">
@@ -67,6 +67,7 @@ function ProductDetailPage() {
             <ProductFormComponent
               product={selectedProduct}
               exitEditMode={exitEditMode}
+
             />
           )}
           <section className="options">

@@ -1,8 +1,8 @@
-import { supabaseConexion } from '../config/supabase';
+import { supabaseConnection } from '../config/supabase';
 
 const updateProduct = async (userData) => {
   try {
-    const { data, error } = await supabaseConexion
+    const { data, error } = await supabaseConnection
       .from('product')
       .update(userData)
       .eq('id', userData.id)
@@ -22,7 +22,7 @@ const updateProduct = async (userData) => {
 
 const createProduct = async (userData) => {
   try {
-    const { data, error } = await supabaseConexion
+    const { data, error } = await supabaseConnection
       .from('product')
       .insert([userData])
       .select();
@@ -41,7 +41,7 @@ const createProduct = async (userData) => {
 
 const findProductById = async (id) => {
   try {
-    const { data, error } = await supabaseConexion
+    const { data, error } = await supabaseConnection
       .from('product')
       .select()
       .eq('id', id);

@@ -5,9 +5,6 @@ import React, {
   useEffect, useState, createContext,
 } from 'react';
 
-import { getProducts, getProductsNumeric } from '../config/supabase';
-import { createProduct, findProductById, updateProduct } from '../controller/product';
-
 const ProductsContext = createContext();
 
 function ProductsProvider({ children }) {
@@ -19,7 +16,6 @@ function ProductsProvider({ children }) {
   const [orderNumeric, setOrderNumeric] = useState(false);
   const [search, setSearch] = useState('');
   const [order, setOrder] = useState('name');
-  const [error, setError] = useState(null);
 
   // Es un toggle para cambiar el orden de los productos
   // de ascendente a descendente y viceversa.
@@ -67,7 +63,7 @@ function ProductsProvider({ children }) {
     a los productos por defecto.
   */
 
-  const obtainProducts = async () => {
+  const getProducts = async () => {
     let data;
     if (orderNumeric) {
       let searchFloat = parseFloat(search, 10);
@@ -104,65 +100,9 @@ function ProductsProvider({ children }) {
     return Math.round(avgProductsOfPrice / Math.max(1, products.length));
   };
 
-  /*
-    Esta función se encarga de obtener los productos
-    por defecto, es decir, sin filtros ni ordenación.
-  */
-  useEffect(() => {
-    obtainProducts();
-  }, []);
-
-  /*
-     Aquí está la magia, cada vez que cambia el filtro,
-      el orden, el orden ascendente, o la búsqueda,
-      llamamos a la función que obtiene los productos.
-
-      De esta forma, cada vez que cambie alguno de estos
-      valores, se ejecutará la función y obtendremos los
-      productos filtrados y ordenados.
-  */
-
-  useEffect(() => {
-    obtainProducts();
-  }, [order, filterAscending, filter, search, selectedProduct]);
-
-  const selectProductById = async (id) => {
-    if (!id) {
-      setSelectedProduct(null);
-      return;
-    }
-    const product = await findProductById(id);
-    setSelectedProduct(product);
-  };
-
-  const updateSelectedProduct = async (product) => {
-    const result = await updateProduct(product);
-    return result;
-  };
-
-  const createNewProduct = async (product) => {
-    const result = await createProduct(product);
-    return result;
-  };
-
   // Creamos un objeto con los valores que queremos compartir
   const values = {
-    products,
-    filter,
-    filterAscending,
-    orderNumeric,
-    search,
-    order,
-    error,
-    selectedProduct,
-    updateSelectedProduct,
-    selectProductById,
-    precioMedio,
-    changeFilterAscending,
-    selectOrder,
-    selectFilter,
-    selectSearch,
-    createNewProduct,
+
   };
 
   // Retornamos el contexto con los valores

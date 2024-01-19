@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap-icons';
 import './filterComponent.css';
 import { Link } from 'react-router-dom';
-import { ProductsContext } from '../../context/productsProvider';
+import { ProductsContext } from '../../context/productsContext';
 
 function FilterComponent() {
   // Preparamos los estados
@@ -26,7 +26,7 @@ function FilterComponent() {
           {filterAscending ? <SortUp /> : <SortDown />}
         </button>
       </fieldset>
-      <Link to="/products/new">
+      <Link to="/products/new" className="add">
         Añadir producto
         <PlusCircle />
       </Link>

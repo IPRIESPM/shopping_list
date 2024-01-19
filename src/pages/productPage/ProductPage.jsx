@@ -4,7 +4,7 @@ import { JournalText } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import FilterComponent from '../../components/filerComponent/FilterComponent';
 import { UserContext } from '../../context/userContext';
-import { ProductsContext } from '../../context/productsProvider';
+import { ProductsContext } from '../../context/productsContext';
 import ProductListComponent from '../../components/productListComponent/ProductListComponent';
 
 function ProductPage() {
@@ -40,11 +40,7 @@ function ProductPage() {
   return (
     <section className="product-page">
       <h1>
-        <JournalText />
-        {' '}
-        Listado de productos
-        {' '}
-        <JournalText />
+        {`${<JournalText />} Listado de productos ${<JournalText />}`}
       </h1>
       {!user && <p>Debes iniciar sesión para ver los productos</p>}
 
