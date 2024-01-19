@@ -4,6 +4,7 @@
 import React, {
   useState, createContext,
 } from 'react';
+import { getProductsFilteredNumericBD, getProductsFilteredTextBD } from '../controller/product';
 
 const ProductsContext = createContext();
 
@@ -73,9 +74,9 @@ function ProductsProvider({ children }) {
         searchFloat = 0;
       }
 
-      data = await getProductsNumeric(filter, filterAscending, order, searchFloat);
+      data = await getProductsFilteredNumericBD(filter, filterAscending, order, searchFloat);
     } else {
-      data = await getProducts(filter, filterAscending, order, search);
+      data = await getProductsFilteredTextBD(filter, filterAscending, order, search);
     }
 
     if (!data) {
