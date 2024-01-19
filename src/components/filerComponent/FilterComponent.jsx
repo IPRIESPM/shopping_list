@@ -23,7 +23,7 @@ function FilterComponent() {
           <option value="price">Precio</option>
         </select>
         <button type="button" onClick={changeFilterListOrder}>
-          {filterAscending ? <SortUp /> : <SortDown />}
+          {filterAscending ? <SortDown /> : <SortUp />}
         </button>
       </fieldset>
       <Link to="/products/new" className="add">
