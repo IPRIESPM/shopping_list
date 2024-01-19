@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { createContext, useState } from 'react';
-import { supabaseConexion } from '../config/supabase';
+import { getUserDB, loginUserDB, logoutUserDB } from '../controller/user';
 
 const UserContext = createContext();
 
@@ -18,7 +18,7 @@ function UserProvider({ children }) {
     Pero se queda preparado para futuras versiones.
   */
   const [user, setUser] = useState(null);
-  const [nickname, setNickname] = useState('');
+  // const [nickname, setNickname] = useState('');
 
   /*
     Función asíncrona para iniciar sesión.
@@ -32,17 +32,14 @@ function UserProvider({ children }) {
   const logIn = async (userData) => {
     const { email, password } = userData;
 
-    const { data, error } = await supabaseConexion.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const result = await loginUserDB(email, password);
 
-    if (error) {
+    if (!result) {
       return false;
     }
 
-    setUser(data);
-    return data;
+    setUser(result);
+    return result;
   };
 
   /*
@@ -55,8 +52,13 @@ function UserProvider({ children }) {
     para futuras versiones.
   */
   const logOut = async () => {
-    await supabaseConexion.auth.signOut();
+    const result = await logoutUserDB();
+
+    if (!result) {
+      return false;
+    }
     setUser(null);
+    return true;
   };
 
   /*
@@ -69,21 +71,14 @@ function UserProvider({ children }) {
   */
 
   const getUser = async () => {
-    const currentUser = await supabaseConexion.auth.user();
+    const result = await getUserDB();
 
-    if (currentUser) {
-      const { data, error } = await supabaseConexion
-        .from('user')
-        .select('nickname')
-        .eq('id', currentUser.id);
-      if (error) {
-        return null;
-      }
-      setNickname(data[0].nickname);
+    if (!result) {
+      return false;
     }
 
-    setUser(currentUser);
-    return currentUser;
+    setUser(result);
+    return result;
   };
 
   /*
@@ -93,7 +88,6 @@ function UserProvider({ children }) {
   */
   const values = {
     user,
-    nickname,
     logOut,
     logIn,
     getUser,
