@@ -44,7 +44,7 @@ function ProductDetailPage() {
       document.title = 'Hungry';
       selectProductById(null);
     };
-  }, [id, navigate, selectProductById]);
+  }, [id, navigate]);
 
   useEffect(() => {
     if (!user) {
@@ -54,7 +54,7 @@ function ProductDetailPage() {
 
   useEffect(() => {
     if (id !== 'new') selectProductById(id);
-  }, [editMode, createMode, id, selectProductById]);
+  }, [editMode, createMode, id]);
 
   return (
     <section className="product-detail-page">
