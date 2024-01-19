@@ -87,12 +87,12 @@ const getProductsFilteredNumericBD = async (
   return data;
 };
 
-const getProductsFilteredTextBD = async (filter, ascending, order, search) => {
+const getProductsFilteredTextBD = async (Ufilter, ascending, order, search) => {
   const { data, error } = await supabaseConnection
     .from('product')
     .select('*')
     .order(order, { ascending })
-    .filter(filter, 'ilike', `${search}%`);
+    .filter(Ufilter, 'ilike', `${search}%`);
 
   if (error) {
     return false;

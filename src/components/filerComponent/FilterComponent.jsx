@@ -10,39 +10,19 @@ function FilterComponent() {
   // Preparamos los estados
   const {
     changeListOrder, order, changeFilterListOrder, filterAscending,
-    changeFilterList, filter, changeListSearch, search, getProducts,
+    changeFilterList, filter, changeListSearch, search,
   } = useContext(ProductsContext);
-
-  const handleChangeListOrder = (event) => {
-    changeListOrder(event);
-    getProducts();
-  };
-
-  const handleChangeFilterListOrder = () => {
-    changeFilterListOrder();
-    getProducts();
-  };
-
-  const handleChangeFilterList = (event) => {
-    changeFilterList(event);
-    getProducts();
-  };
-
-  const handleChangeListSearch = (event) => {
-    changeListSearch(event);
-    getProducts();
-  };
 
   return (
     <form onSubmit={(event) => event.preventDefault()} className="filter-component">
       <fieldset>
         <p>Ordenar por</p>
-        <select name="order" id="order" onChange={handleChangeListOrder} value={order}>
+        <select name="order" id="order" onChange={changeListOrder} value={order}>
           <option value="name">Nombre</option>
           <option value="weight">Peso</option>
           <option value="price">Precio</option>
         </select>
-        <button type="button" onClick={handleChangeFilterListOrder}>
+        <button type="button" onClick={changeFilterListOrder}>
           {filterAscending ? <SortUp /> : <SortDown />}
         </button>
       </fieldset>
@@ -55,7 +35,7 @@ function FilterComponent() {
           <FunnelFill />
           Filtrar:
         </p>
-        <select name="filter" id="filter" onChange={handleChangeFilterList} value={filter}>
+        <select name="filter" id="filter" onChange={changeFilterList} value={filter}>
           <option value="name">Nombre</option>
           <option value="weight">Peso</option>
           <option value="price">Precio</option>
@@ -64,7 +44,7 @@ function FilterComponent() {
           type="search"
           name="filtrar"
           id="filter"
-          onChange={handleChangeListSearch}
+          onChange={changeListSearch}
           value={search}
           placeholder="Tomate🍅"
         />

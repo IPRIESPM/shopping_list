@@ -1,12 +1,17 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useContext } from 'react';
 import './productListComponent.css';
 import { useNavigate } from 'react-router-dom';
 import ProductComponent from '../productComponent/ProductComponent';
+import { ProductsContext } from '../../context/productsContext';
 
-function ProductListComponent({ products, calcPriceMedium }) {
+function ProductListComponent() {
   const navigate = useNavigate();
+  const {
+    products,
+    calcPriceMedium,
+  } = useContext(ProductsContext);
 
   const goToProductPage = (id) => () => {
     navigate(`/products/${id}`);

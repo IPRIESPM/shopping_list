@@ -8,7 +8,7 @@ import ProductListComponent from '../../components/productListComponent/ProductL
 function ProductPage() {
   // Preparamos los estados
   const {
-    products, error, calcPriceMedium, getProducts,
+    error, getProducts,
   } = useContext(ProductsContext);
 
   // al desmontar el componente, cambiamos el título de la página.
@@ -36,7 +36,7 @@ function ProductPage() {
         <p>Ha ocurrido un error revisa los filtros</p>
       )}
       {!error && (
-        <ProductListComponent products={products} calcPriceMedium={calcPriceMedium} />
+        <ProductListComponent />
       )}
     </section>
   );

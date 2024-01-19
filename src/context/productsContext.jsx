@@ -2,9 +2,14 @@
 /* eslint-disable react/prop-types */
 
 import React, {
-  useState, createContext,
+  useState, createContext, useEffect,
 } from 'react';
-import { getProductsFilteredNumericBD, getProductsFilteredTextBD, getProductsDb } from '../controller/product';
+
+import {
+  getProductsFilteredNumericBD,
+  getProductsFilteredTextBD,
+  getProductsDb,
+} from '../controller/product';
 
 const ProductsContext = createContext();
 
@@ -18,11 +23,51 @@ function ProductsProvider({ children }) {
   const [search, setSearch] = useState('');
   const [order, setOrder] = useState('name');
   const [error, setError] = useState(null);
+  /*
+    Esta función se encarga de obtener los productos,
+    si el filtro es numérico, llama a la función que filtra
+    por números, si no, llama a la función que filtra por texto.
+
+    Esta función estamos reutilizando para filtrar, ordenar y llamar
+    a los productos por defecto.
+  */
+
+  const getProducts = async () => {
+    let data;
+    if (orderNumeric) {
+      let searchFloat = parseFloat(search, 10);
+      if (Number.isNaN(searchFloat) || search === '') {
+        searchFloat = 0;
+      }
+      data = await getProductsFilteredNumericBD(filter, filterAscending, order, searchFloat);
+    }
+
+    if (!orderNumeric && search === '') {
+      data = await getProductsFilteredTextBD(filter, filterAscending, order, search);
+    } else {
+      data = await getProductsFilteredTextBD(filter, filterAscending, order, search);
+    }
+
+    if (!data) {
+      setError(true);
+    } else {
+      setError(null);
+      setProduct(data);
+    }
+  };
 
   // Es un toggle para cambiar el orden de los productos
   // de ascendente a descendente y viceversa.
-  const changeFilterListOrder = () => {
+  const changeFilterListOrder = async () => {
     setFilterAscending(!filterAscending);
+
+    if (filterAscending) {
+      setFilterAscending(false);
+    } else {
+      setFilterAscending(true);
+    }
+
+    await getProducts();
   };
 
   // Esta función se encarga de
@@ -40,7 +85,7 @@ function ProductsProvider({ children }) {
   */
   const changeFilterList = (event) => {
     setFilter(event.target.value);
-    setSearch(null);
+    setSearch('');
 
     if (event.target.value !== 'name') {
       setOrderNumeric(true);
@@ -66,40 +111,6 @@ function ProductsProvider({ children }) {
     const product = products.find((item) => item.id === id);
     setSelectedProduct(product);
     return product;
-  };
-
-  /*
-    Esta función se encarga de obtener los productos,
-    si el filtro es numérico, llama a la función que filtra
-    por números, si no, llama a la función que filtra por texto.
-
-    Esta función estamos reutilizando para filtrar, ordenar y llamar
-    a los productos por defecto.
-  */
-
-  const getProducts = async () => {
-    let data;
-    if (orderNumeric) {
-      let searchFloat = parseFloat(search, 10);
-
-      if (Number.isNaN(searchFloat) || search === '') {
-        searchFloat = 0;
-      }
-
-      data = await getProductsFilteredNumericBD(filter, filterAscending, order, searchFloat);
-    } else {
-      if (search === '') {
-        data = await getProductsDb(filter, filterAscending, order, search);
-      }
-      data = await getProductsFilteredTextBD(filter, filterAscending, order, search);
-    }
-
-    if (!data) {
-      setError(true);
-    } else {
-      setError(null);
-      setProduct(data);
-    }
   };
 
   /*
