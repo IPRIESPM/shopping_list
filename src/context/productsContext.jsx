@@ -2,13 +2,12 @@
 /* eslint-disable react/prop-types */
 
 import React, {
-  useState, createContext, useEffect,
+  useState, createContext,
 } from 'react';
 
 import {
   getProductsFilteredNumericBD,
   getProductsFilteredTextBD,
-  getProductsDb,
 } from '../controller/product';
 
 const ProductsContext = createContext();
