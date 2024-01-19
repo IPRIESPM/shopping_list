@@ -56,6 +56,10 @@ function ProductsProvider({ children }) {
     setSearch(event.target.value);
   };
 
+  const changeSelectedProduct = (product) => {
+    setSelectedProduct(product);
+  };
+
   /*
     Esta función se encarga de obtener los productos,
     si el filtro es numérico, llama a la función que filtra
@@ -112,10 +116,11 @@ function ProductsProvider({ children }) {
     search,
     order,
     error,
-    changeFilterAscending,
-    selectOrder,
-    selectFilter,
-    selectSearch,
+    changeSelectedProduct,
+    changeFilterListOrder,
+    changeListOrder,
+    changeFilterList,
+    changeListSearch,
     getProducts,
     calcPriceMedium,
   };
