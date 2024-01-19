@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, {
-  useEffect, useState, createContext,
+  useState, createContext,
 } from 'react';
 
 const ProductsContext = createContext();
@@ -16,6 +16,7 @@ function ProductsProvider({ children }) {
   const [orderNumeric, setOrderNumeric] = useState(false);
   const [search, setSearch] = useState('');
   const [order, setOrder] = useState('name');
+  const [error, setError] = useState(null);
 
   // Es un toggle para cambiar el orden de los productos
   // de ascendente a descendente y viceversa.
@@ -92,7 +93,7 @@ function ProductsProvider({ children }) {
     Reducimos carga de la base de datos ya que es un cálculo
     perfecto para hacer en el cliente.
   */
-  const precioMedio = () => {
+  const calcPriceMedium = () => {
     const avgProductsOfPrice = products.reduce(
       (acc, product) => acc + product.price,
       0,
@@ -102,7 +103,20 @@ function ProductsProvider({ children }) {
 
   // Creamos un objeto con los valores que queremos compartir
   const values = {
-
+    products,
+    selectedProduct,
+    filter,
+    filterAscending,
+    orderNumeric,
+    search,
+    order,
+    error,
+    changeFilterAscending,
+    selectOrder,
+    selectFilter,
+    selectSearch,
+    getProducts,
+    calcPriceMedium,
   };
 
   // Retornamos el contexto con los valores

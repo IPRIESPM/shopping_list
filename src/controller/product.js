@@ -1,4 +1,4 @@
-import { supabaseConnection } from '../config/supabase';
+import supabaseConnection from '../config/supabase';
 
 const updateProductDB = async (userData) => {
   try {
