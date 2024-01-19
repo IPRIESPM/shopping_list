@@ -20,13 +20,13 @@ function ProductsProvider({ children }) {
 
   // Es un toggle para cambiar el orden de los productos
   // de ascendente a descendente y viceversa.
-  const changeFilterAscending = () => {
+  const changeFilterListOrder = () => {
     setFilterAscending(!filterAscending);
   };
 
   // Esta función se encarga de
   // cambiar el orden de los productos.
-  const selectOrder = (event) => {
+  const changeListOrder = (event) => {
     setOrder(event.target.value);
   };
 
@@ -37,7 +37,7 @@ function ProductsProvider({ children }) {
     Si el filtro es numérico, cambia el estado
     de orderNumeric a true, si no, a false.
   */
-  const selectFilter = (event) => {
+  const changeFilterList = (event) => {
     setFilter(event.target.value);
     setSearch('');
 
@@ -51,7 +51,7 @@ function ProductsProvider({ children }) {
   // Esta función se encarga de establecer el valor
   // del campo de búsqueda.
 
-  const selectSearch = (event) => {
+  const changeListSearch = (event) => {
     setSearch(event.target.value);
   };
 
