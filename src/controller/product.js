@@ -52,4 +52,61 @@ const findProductByIdDB = async (id) => {
   }
 };
 
-export { updateProductDB, createProductDB, findProductByIdDB };
+const getProductsDbFilter = async (filter) => {
+  try {
+    const { data, error } = await supabaseConnection
+      .from('product')
+      .select()
+      .like('name', `%${filter}%`);
+
+    if (error) {
+      return false;
+    }
+
+    return data;
+  } catch (error) {
+    return false;
+  }
+};
+
+const getProductsFilteredNumericBD = async (
+  filter,
+  ascending,
+  order,
+  search,
+) => {
+  const { data, error } = await supabaseConnection
+    .from('product')
+    .select('*')
+    .order(order, { ascending })
+    .lte(filter, search);
+
+  if (error) {
+    return false;
+  }
+
+  return data;
+};
+
+const getProductsFilteredTextBD = async (filter, ascending, order, search) => {
+  const { data, error } = await supabaseConnection
+    .from('product')
+    .select('*')
+    .order(order, { ascending })>
+    .filter(filter, 'ilike', `${search}%`);
+
+  if (error) {
+    return false;
+  }
+
+  return data;
+};
+
+export {
+  updateProductDB,
+  createProductDB,
+  findProductByIdDB,
+  getProductsDbFilter,
+  getProductsFilteredNumericBD,
+  getProductsFilteredTextBD,
+};
