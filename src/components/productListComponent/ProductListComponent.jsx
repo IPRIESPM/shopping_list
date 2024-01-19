@@ -5,7 +5,7 @@ import './productListComponent.css';
 import { useNavigate } from 'react-router-dom';
 import ProductComponent from '../productComponent/ProductComponent';
 
-function ProductListComponent({ products, precioMedio }) {
+function ProductListComponent({ products, calcPriceMedium }) {
   const navigate = useNavigate();
 
   const goToProductPage = (id) => () => {
@@ -38,7 +38,7 @@ function ProductListComponent({ products, precioMedio }) {
         <p>
           Precio medio:
           <b>
-            {precioMedio()}
+            {calcPriceMedium()}
             €
           </b>
         </p>

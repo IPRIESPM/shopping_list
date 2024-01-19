@@ -4,7 +4,7 @@
 import React, {
   useState, createContext,
 } from 'react';
-import { getProductsFilteredNumericBD, getProductsFilteredTextBD } from '../controller/product';
+import { getProductsFilteredNumericBD, getProductsFilteredTextBD, getProductsDb } from '../controller/product';
 
 const ProductsContext = createContext();
 
@@ -40,7 +40,7 @@ function ProductsProvider({ children }) {
   */
   const changeFilterList = (event) => {
     setFilter(event.target.value);
-    setSearch('');
+    setSearch(null);
 
     if (event.target.value !== 'name') {
       setOrderNumeric(true);
@@ -53,11 +53,19 @@ function ProductsProvider({ children }) {
   // del campo de búsqueda.
 
   const changeListSearch = (event) => {
-    setSearch(event.target.value);
+    const { value } = event.target;
+    const trimmedValue = value.trim();
+    setSearch(trimmedValue);
   };
 
   const changeSelectedProduct = (product) => {
     setSelectedProduct(product);
+  };
+
+  const selectProductById = (id) => {
+    const product = products.find((item) => item.id === id);
+    setSelectedProduct(product);
+    return product;
   };
 
   /*
@@ -80,6 +88,9 @@ function ProductsProvider({ children }) {
 
       data = await getProductsFilteredNumericBD(filter, filterAscending, order, searchFloat);
     } else {
+      if (search === '') {
+        data = await getProductsDb(filter, filterAscending, order, search);
+      }
       data = await getProductsFilteredTextBD(filter, filterAscending, order, search);
     }
 
@@ -123,6 +134,7 @@ function ProductsProvider({ children }) {
     changeListSearch,
     getProducts,
     calcPriceMedium,
+    selectProductById,
   };
 
   // Retornamos el contexto con los valores

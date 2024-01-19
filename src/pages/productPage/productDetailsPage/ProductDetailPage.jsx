@@ -3,15 +3,13 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Pencil, PencilFill, Trash2 } from 'react-bootstrap-icons';
 import { ProductsContext } from '../../../context/productsContext';
-import { UserContext } from '../../../context/userContext';
 import ProductComponent from '../../../components/productComponent/ProductComponent';
 import './productDetailPage.css';
 import ProductFormComponent from '../../../components/productFormComponent/ProductFormComponent';
 
 function ProductDetailPage() {
   const { id } = useParams();
-  const { selectedProduct, selectProductById } = useContext(ProductsContext);
-  const { user } = useContext(UserContext);
+  const { selectedProduct, selectProductById, changeSelectedProduct } = useContext(ProductsContext);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [createMode, setCreateMode] = useState(false);
@@ -42,15 +40,9 @@ function ProductDetailPage() {
     }
     return () => {
       document.title = 'Hungry';
-      selectProductById(null);
+      changeSelectedProduct(null);
     };
   }, [id]);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, []);
 
   useEffect(() => {
     if (id !== 'new') selectProductById(id);
@@ -58,9 +50,9 @@ function ProductDetailPage() {
 
   return (
     <section className="product-detail-page">
-      {user && selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
-      {user && createMode && <h1> Nueva ficha de producto</h1>}
-      {user && selectedProduct && (
+      { selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
+      { createMode && <h1> Nueva ficha de producto</h1>}
+      { selectedProduct && (
         <section className="product-detail">
           {!editMode && <ProductComponent product={selectedProduct} />}
           {editMode && (
@@ -84,7 +76,7 @@ function ProductDetailPage() {
         </section>
       )}
 
-      {user && createMode && (
+      { createMode && (
         <ProductFormComponent
           product={null}
           exitEditMode={exitEditMode}

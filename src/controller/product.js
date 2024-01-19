@@ -52,12 +52,11 @@ const findProductByIdDB = async (id) => {
   }
 };
 
-const getProductsDbFilter = async (filter) => {
+const getProductsDb = async () => {
   try {
     const { data, error } = await supabaseConnection
       .from('product')
-      .select()
-      .like('name', `%${filter}%`);
+      .select('*');
 
     if (error) {
       return false;
@@ -106,7 +105,7 @@ export {
   updateProductDB,
   createProductDB,
   findProductByIdDB,
-  getProductsDbFilter,
+  getProductsDb,
   getProductsFilteredNumericBD,
   getProductsFilteredTextBD,
 };

@@ -5,7 +5,7 @@ import RouterComponent from './components/routerComponent/RouterComponent';
 import HeaderComponent from './components/headerComponent/HeaderComponent';
 import NavComponent from './components/navComponent/NavComponent';
 import { UserProvider } from './context/userContext';
-import { ProductsProvider } from './context/productsProvider';
+import { ProductsProvider } from './context/productsContext';
 
 function App() {
   /*
