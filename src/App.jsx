@@ -6,6 +6,7 @@ import HeaderComponent from './components/headerComponent/HeaderComponent';
 import NavComponent from './components/navComponent/NavComponent';
 import { UserProvider } from './context/userContext';
 import { ProductsProvider } from './context/productsContext';
+import { ModalProvider } from './context/modalContext';
 
 function App() {
   /*
@@ -26,9 +27,11 @@ function App() {
         <HeaderComponent />
         <NavComponent />
         <ProductsProvider>
-          <main>
-            <RouterComponent />
-          </main>
+          <ModalProvider>
+            <main>
+              <RouterComponent />
+            </main>
+          </ModalProvider>
         </ProductsProvider>
       </BrowserRouter>
     </UserProvider>

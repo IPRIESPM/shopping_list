@@ -6,10 +6,13 @@ import { ProductsContext } from '../../../context/productsContext';
 import ProductComponent from '../../../components/productComponent/ProductComponent';
 import './productDetailPage.css';
 import ProductFormComponent from '../../../components/productFormComponent/ProductFormComponent';
+import { ModalContext } from '../../../context/modalContext';
+import ModalComponent from '../../../components/modalComponent/ModalComponent';
 
 function ProductDetailPage() {
   const { id } = useParams();
   const { selectedProduct, selectProductById, changeSelectedProduct } = useContext(ProductsContext);
+  const { changeModal, modalStatus } = useContext(ModalContext);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [createMode, setCreateMode] = useState(false);
@@ -46,7 +49,7 @@ function ProductDetailPage() {
 
   return (
     <section className="product-detail-page">
-
+      {modalStatus && <ModalComponent />}
       { selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
       { createMode && <h1> Nueva ficha de producto</h1>}
       { selectedProduct && (
@@ -61,7 +64,7 @@ function ProductDetailPage() {
           )}
           <section className="options">
             {!editMode && (
-              <button type="button">
+              <button type="button" onClick={changeModal}>
                 <Trash2 />
               </button>
             )}

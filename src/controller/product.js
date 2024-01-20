@@ -101,6 +101,23 @@ const getProductsFilteredTextBD = async (Ufilter, ascending, order, search) => {
   return data;
 };
 
+const deleteProductDB = async (id) => {
+  try {
+    const { data, error } = await supabaseConnection
+      .from('product')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      return false;
+    }
+
+    return data;
+  } catch (error) {
+    return false;
+  }
+};
+
 export {
   updateProductDB,
   createProductDB,
@@ -108,4 +125,5 @@ export {
   getProductsDb,
   getProductsFilteredNumericBD,
   getProductsFilteredTextBD,
+  deleteProductDB,
 };

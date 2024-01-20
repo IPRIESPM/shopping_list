@@ -5,6 +5,7 @@ import React, { useState, createContext } from 'react';
 
 import {
   createProductDB,
+  deleteProductDB,
   getProductsDb,
   getProductsFilteredNumericBD,
   getProductsFilteredTextBD,
@@ -157,6 +158,20 @@ function ProductsProvider({ children }) {
     return result;
   };
 
+  const deleteProduct = () => {
+    setLoading(true);
+    const result = deleteProductDB(selectedProduct.id);
+    if (!result) {
+      setError(true);
+      return false;
+    }
+
+    getProducts();
+    setLoading(false);
+    setError(false);
+    return true;
+  };
+
   const values = {
     products,
     selectedProduct,
@@ -179,6 +194,7 @@ function ProductsProvider({ children }) {
     calcPriceMedium,
     selectProductById,
     setError,
+    deleteProduct,
   };
 
   return (
