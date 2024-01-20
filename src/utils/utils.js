@@ -21,6 +21,17 @@ const validateInputs = (targets) => {
       isValid = false;
     }
 
+    if (targets[i].type === 'email' && !validateEmail(targets[i].value)) {
+      targets[i].setCustomValidity(`El ${targets[i].name} debe ser un email válido`);
+      isValid = false;
+    }
+
+    if (targets[i].type === 'text' && targets[i].name === 'name' && targets[i].value === '') {
+      targets[i].setCustomValidity('El nombre es obligatorio');
+      targets[i].focus();
+      isValid = false;
+    }
+
     if (targets[i].type === 'url' && !validateUrl(targets[i].value) && targets[i].required) {
       targets[i].setCustomValidity(`La ${targets[i].name} debe ser una url`);
       isValid = false;

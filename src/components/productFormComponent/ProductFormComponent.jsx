@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext, useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ import { validateInputs } from '../../utils/utils';
 import './productFormComponent.css';
 import { ProductsContext } from '../../context/productsContext';
 import ErrorComponent from '../errorComponent/ErrorComponent';
+import LoadingComponent from '../loadingComponent/LoadingComponent';
 
 function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
   const defaultProduct = {
@@ -15,10 +17,9 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
     price: 0,
   };
   const {
-    updateSelectedProduct, createNewProduct, refreshProduct, obtainProducts,
+    updateProduct, createProduct, loading, error,
   } = useContext(ProductsContext);
   const [formProduct, setFormProduct] = useState(defaultProduct);
-  const [error, setError] = useState(false);
   const [createMode, setCreateMode] = useState(false);
 
   const navigate = useNavigate();
@@ -44,16 +45,16 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(false);
     const isValid = validateInputs(event.target);
+    event.target.reportValidity();
 
     if (isValid) {
       let result;
 
       if (createMode) {
-        result = await createNewProduct(formProduct);
+        result = await createProduct(formProduct);
       } else {
-        result = await updateSelectedProduct(formProduct);
+        result = await updateProduct(formProduct);
       }
 
       if (result) {
@@ -61,12 +62,10 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
           exitCreateMode();
           navigate(`/products/${result[0].id}`);
         } else {
-          refreshProduct(result[0]);
-          obtainProducts();
           exitEditMode();
         }
       } else {
-        setError(true);
+        event.target.setCustomValidity('Error en la petición');
       }
     }
   };
@@ -74,12 +73,14 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
   return (
     <section className="product-form">
       {error && <ErrorComponent message={createMode ? 'Error al crear el producto' : 'Error al modificar el producto'} />}
+
+      { loading && <LoadingComponent message={createMode ? 'Creando producto' : 'Modificando producto'} />}
       <form onSubmit={handleSubmit} className="product-form">
         <label htmlFor="image">Url de la imagen: </label>
         <input type="url" name="img_url" id="image" value={formProduct.image} onChange={updateValue} />
 
         <label htmlFor="name">Nombre</label>
-        <input type="text" name="name" id="name" value={formProduct.name} onChange={updateValue} required />
+        <input type="text" name="name" id="name" value={formProduct.name} onChange={updateValue} autoFocus />
 
         <label htmlFor="price">Precio €</label>
         <input type="text" name="price" id="price" value={formProduct.price} onChange={updateValue} />

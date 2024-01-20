@@ -4,9 +4,11 @@
 import React, { useState, createContext } from 'react';
 
 import {
+  createProductDB,
   getProductsDb,
   getProductsFilteredNumericBD,
   getProductsFilteredTextBD,
+  updateProductDB,
 } from '../controller/product';
 
 const ProductsContext = createContext();
@@ -115,6 +117,46 @@ function ProductsProvider({ children }) {
     return Math.round(avgProductsOfPrice / Math.max(1, products.length));
   };
 
+  const updateProduct = async (product) => {
+    const index = products.findIndex((item) => item.id === product.id);
+    if (index >= 0) {
+      setLoading(true);
+      const result = await updateProductDB(product);
+      if (!result) {
+        setLoading(false);
+        setError(true);
+        return false;
+      }
+
+      const newProducts = [...products];
+      newProducts[index] = product;
+      setSelectedProduct(product);
+      setProduct(newProducts);
+      setLoading(false);
+      setError(false);
+      return true;
+    }
+    return false;
+  };
+
+  const createProduct = async (product) => {
+    setLoading(true);
+    const result = await createProductDB(product);
+    if (!result) {
+      setLoading(false);
+      setError(true);
+      return false;
+    }
+
+    const newProducts = [...products];
+    newProducts.push(result[0]);
+    setSelectedProduct(result[0]);
+    setProduct(newProducts);
+    setLoading(false);
+    setError(false);
+    return result;
+  };
+
   const values = {
     products,
     selectedProduct,
@@ -132,6 +174,8 @@ function ProductsProvider({ children }) {
     changeListSearch,
     getProducts,
     getProductsFilter,
+    updateProduct,
+    createProduct,
     calcPriceMedium,
     selectProductById,
     setError,

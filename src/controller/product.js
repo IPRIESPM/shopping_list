@@ -23,7 +23,7 @@ const createProductDB = async (userData) => {
     const { data, error } = await supabaseConnection
       .from('product')
       .insert([userData])
-      .select();
+      .select('*');
 
     if (error) {
       return false;

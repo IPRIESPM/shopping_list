@@ -44,12 +44,9 @@ function ProductDetailPage() {
     };
   }, [id]);
 
-  useEffect(() => {
-    if (id !== 'new') selectProductById(id);
-  }, [id]);
-
   return (
     <section className="product-detail-page">
+
       { selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
       { createMode && <h1> Nueva ficha de producto</h1>}
       { selectedProduct && (
