@@ -29,7 +29,7 @@ const validateInputs = (targets) => {
   return isValid;
 };
 const getFormData = (form) => {
-  const formData = new FormData(form.target);
+  const formData = new FormData(form);
   const data = Object.fromEntries(formData);
 
   return data;

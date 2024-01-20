@@ -5,19 +5,26 @@ import {
 import './filterComponent.css';
 import { Link } from 'react-router-dom';
 import { ProductsContext } from '../../context/productsContext';
+import { getFormData } from '../../utils/utils';
 
 function FilterComponent() {
-  // Preparamos los estados
   const {
-    changeListOrder, order, changeFilterListOrder, filterAscending,
-    changeFilterList, filter, changeListSearch, search,
+    changeListOrder, orderContext, changeFilterListOrder, filterAscending,
+    changeFilterList, filterContext, changeListSearch, searchContext, getProductsFilter,
   } = useContext(ProductsContext);
 
+  const handleForm = (event) => {
+    event.preventDefault();
+    const data = getFormData(event.currentTarget);
+    const { order, filter, search } = data;
+    const orderNumeric = filter !== 'name';
+    getProductsFilter(filter, order, search, orderNumeric);
+  };
   return (
-    <form onSubmit={(event) => event.preventDefault()} className="filter-component">
+    <form onSubmit={handleForm} onChange={handleForm} className="filter-component">
       <fieldset>
         <p>Ordenar por</p>
-        <select name="order" id="order" onChange={changeListOrder} value={order}>
+        <select name="order" onChange={changeListOrder} value={orderContext}>
           <option value="name">Nombre</option>
           <option value="weight">Peso</option>
           <option value="price">Precio</option>
@@ -26,27 +33,28 @@ function FilterComponent() {
           {filterAscending ? <SortDown /> : <SortUp />}
         </button>
       </fieldset>
+
       <Link to="/products/new" className="add">
         Añadir producto
         <PlusCircle />
       </Link>
+
       <fieldset>
         <p>
           <FunnelFill />
           Filtrar:
         </p>
-        <select name="filter" id="filter" onChange={changeFilterList} value={filter}>
+        <select name="filter" onChange={changeFilterList} value={filterContext}>
           <option value="name">Nombre</option>
           <option value="weight">Peso</option>
           <option value="price">Precio</option>
         </select>
         <input
           type="search"
-          name="filtrar"
-          id="filter"
+          name="search"
           onChange={changeListSearch}
-          value={search}
-          placeholder="Tomate🍅"
+          value={searchContext}
+          placeholder="Tomate"
         />
       </fieldset>
     </form>
