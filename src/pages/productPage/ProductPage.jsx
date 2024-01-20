@@ -3,12 +3,14 @@ import './productPage.css';
 import { JournalText } from 'react-bootstrap-icons';
 import FilterComponent from '../../components/filerComponent/FilterComponent';
 import { ProductsContext } from '../../context/productsContext';
+import ErrorComponent from '../../components/errorComponent/ErrorComponent';
+import LoadingComponent from '../../components/loadingComponent/LoadingComponent';
 import ProductListComponent from '../../components/productListComponent/ProductListComponent';
 
 function ProductPage() {
   // Preparamos los estados
   const {
-    error, getProducts,
+    error, getProducts, loading,
   } = useContext(ProductsContext);
 
   // al desmontar el componente, cambiamos el título de la página.
@@ -32,8 +34,11 @@ function ProductPage() {
 
       <FilterComponent />
 
+      {loading && (
+        <LoadingComponent message="Cargando productos" />
+      )}
       {error && (
-        <p>Ha ocurrido un error revisa los filtros</p>
+        <ErrorComponent message="Error cargando los productos" />
       )}
       {!error && (
         <ProductListComponent />

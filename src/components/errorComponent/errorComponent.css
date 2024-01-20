@@ -1,0 +1,10 @@
+
+section.error{
+    color:var(--error);
+
+    & p{
+        font-size: 2.5em;
+        font-family: 'Dancing Script', cursive;
+        color:var(--error);
+    }
+  }

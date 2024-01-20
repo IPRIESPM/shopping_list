@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import './errorComponent.css';
 
 function ErrorComponent({ message }) {
   return (

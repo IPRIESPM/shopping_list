@@ -20,18 +20,23 @@ function ProductsProvider({ children }) {
   const [searchContext, setSearch] = useState('');
   const [orderContext, setOrder] = useState('name');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getProducts = async () => {
+    setLoading(true);
     try {
       const data = await getProductsDb();
       setError(null);
       setProduct(data);
     } catch (err) {
       setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   const getProductsFilter = async (filter, order, search, orderNumeric) => {
+    setLoading(true);
     try {
       let data;
 
@@ -65,12 +70,14 @@ function ProductsProvider({ children }) {
       setProduct(data);
     } catch (err) {
       setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   const changeFilterListOrder = () => {
     setFilterAscending((prevFilterAscending) => !prevFilterAscending);
-    getProductsFilter(filterContext, orderContext, searchContext);
+    getProductsFilter(filterContext, orderContext, searchContext, orderNumericContext);
   };
 
   const changeListOrder = (event) => {
@@ -117,6 +124,7 @@ function ProductsProvider({ children }) {
     searchContext,
     orderContext,
     error,
+    loading,
     changeSelectedProduct,
     changeFilterListOrder,
     changeListOrder,
@@ -126,6 +134,7 @@ function ProductsProvider({ children }) {
     getProductsFilter,
     calcPriceMedium,
     selectProductById,
+    setError,
   };
 
   return (

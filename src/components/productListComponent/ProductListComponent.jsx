@@ -8,10 +8,7 @@ import { ProductsContext } from '../../context/productsContext';
 
 function ProductListComponent() {
   const navigate = useNavigate();
-  const {
-    products,
-    calcPriceMedium,
-  } = useContext(ProductsContext);
+  const { products, calcPriceMedium } = useContext(ProductsContext);
 
   const goToProductPage = (id) => () => {
     navigate(`/products/${id}`);
@@ -26,28 +23,33 @@ function ProductListComponent() {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            <button type="button" className="product" onClick={goToProductPage(product.id)}>
+            <button
+              type="button"
+              className="product"
+              onClick={goToProductPage(product.id)}
+            >
               <ProductComponent product={product} />
             </button>
           </li>
-
         ))}
       </ul>
       <hr />
-      <section className="total">
-        <p>
-          Total de productos:
-          {' '}
-          <b>{products.length}</b>
-        </p>
-        <p>
-          Precio medio:
-          <b>
-            {calcPriceMedium()}
-            €
-          </b>
-        </p>
-      </section>
+      {products.length !== 0 && (
+        <section className="total">
+          <p>
+            Total de productos:
+            {' '}
+            <b>{products.length}</b>
+          </p>
+          <p>
+            Precio medio:
+            <b>
+              {calcPriceMedium()}
+              €
+            </b>
+          </p>
+        </section>
+      )}
     </section>
   );
 }

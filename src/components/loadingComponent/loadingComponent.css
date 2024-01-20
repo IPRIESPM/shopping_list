@@ -1,0 +1,10 @@
+
+section.loading{
+    color:var(--yellow);
+
+    & p.loading{
+        font-size: 2.5em;
+        font-family: 'Dancing Script', cursive;
+        color:var(--yellow);
+    }
+  }
