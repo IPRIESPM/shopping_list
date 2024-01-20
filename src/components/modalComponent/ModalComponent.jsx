@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import './modalComponent.css';
+import { useNavigate } from 'react-router-dom';
 import { ModalContext } from '../../context/modalContext';
 import { ProductsContext } from '../../context/productsContext';
 
 function ModalComponent() {
+  const navigate = useNavigate();
   const { modalStatus, changeModal } = useContext(ModalContext);
   const { selectedProduct, deleteProduct } = useContext(ProductsContext);
   const closeModal = () => {
@@ -13,8 +15,10 @@ function ModalComponent() {
   const handleDelete = () => {
     if (deleteProduct()) {
       closeModal();
+      navigate('/products');
     }
   };
+
   return (
     <section className={`modal ${modalStatus}`}>
       <div className="modal-container">

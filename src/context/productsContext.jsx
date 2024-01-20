@@ -167,6 +167,7 @@ function ProductsProvider({ children }) {
     }
 
     getProducts();
+    changeSelectedProduct(null);
     setLoading(false);
     setError(false);
     return true;
