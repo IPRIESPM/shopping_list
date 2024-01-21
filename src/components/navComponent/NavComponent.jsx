@@ -5,6 +5,8 @@ import './navComponent.css';
 
 function NavComponent() {
   return (
+    // Un componente que muestra un menú de navegación.
+    // con dos enlaces a las rutas de productos y listas de la compra.
     <nav className="active">
       <Link to="/products">
         <JournalText />

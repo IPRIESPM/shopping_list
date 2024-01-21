@@ -7,7 +7,9 @@ import ProductComponent from '../productComponent/ProductComponent';
 import { ProductsContext } from '../../../context/productsContext';
 
 function ProductListComponent() {
+  // Traemos la función para navegar, entre páginas.
   const navigate = useNavigate();
+  // Traemos los productos y la función para calcular el precio medio.
   const { products, calcPriceMedium } = useContext(ProductsContext);
 
   const goToProductPage = (id) => () => {

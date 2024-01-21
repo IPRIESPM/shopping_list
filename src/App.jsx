@@ -20,6 +20,10 @@ function App() {
       esta vez limitado a la zona de main
       para intentar limitar en la medida de lo posible.
   */
+  /*
+      Añadimos el contexto de modal
+      para que este disponible la zona de productos.
+  */
   return (
 
     <UserProvider>

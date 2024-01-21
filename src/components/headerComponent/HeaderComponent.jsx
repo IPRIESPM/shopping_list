@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
 
 function HeaderComponent() {
+  // Nos traemos el contexto del usuario.
   const { user, logOut, checkUserLoggedLocal } = useContext(UserContext);
+  // Comprobamos si el usuario esta logueado.
   useEffect(() => {
     (async () => {
       await checkUserLoggedLocal();
     })();
   }, []);
+  // Si el usuario esta logueado mostramos el botón de cerrar sesión.
+  // Si no esta logueado mostramos el botón de iniciar sesión.
   return (
 
     <header>

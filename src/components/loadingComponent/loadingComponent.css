@@ -2,9 +2,24 @@
 section.loading{
     color:var(--yellow);
 
-    & p.loading{
+    & p.message{
         font-size: 2.5em;
         font-family: 'Dancing Script', cursive;
         color:var(--yellow);
+    }
+
+    & div.loading{
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        border: 1px solid transparent;
+        border-top-color: var(--yellow);
+        animation: loading 1s infinite;
+    }
+  }
+
+  @keyframes loading{
+    to{
+        transform: rotate(360deg);
     }
   }

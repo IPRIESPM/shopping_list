@@ -5,16 +5,19 @@ import { ModalContext } from '../../context/modalContext';
 import ProductModal from './productModal/ProductModal';
 
 function ModalComponent({ modalTitle }) {
+  // Nostraemos el contexto del modal.
   const { modalStatus, changeModal } = useContext(ModalContext);
-
+  // Función callback para cerrar el modal.
   const closeModal = () => {
     changeModal();
   };
 
   useEffect(() => {
+    // Cambiamos el título de la página.
     document.title = `${modalTitle} - Hungry`;
 
     return () => {
+      // Cuando se desmonte el componente cambiamos el título de la página.
       document.title = 'Hungry';
     };
   }, []);

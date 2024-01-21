@@ -25,6 +25,7 @@ function ProductsProvider({ children }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Función para traernos los productos, sin filtros.
   const getProducts = async () => {
     setLoading(true);
     try {
@@ -38,6 +39,7 @@ function ProductsProvider({ children }) {
     }
   };
 
+  // Función para traernos los productos, con filtros.
   const getProductsFilter = async (filter, order, search, orderNumeric) => {
     setLoading(true);
     try {
@@ -77,7 +79,8 @@ function ProductsProvider({ children }) {
       setLoading(false);
     }
   };
-
+  // Función para cambiar el orden de la lista.
+  // además de cambiar el orden de la lista, llama a la función getProductsFilter.
   const changeFilterListOrder = () => {
     setFilterAscending((prevFilterAscending) => !prevFilterAscending);
     getProductsFilter(filterContext, orderContext, searchContext, orderNumericContext);

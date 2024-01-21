@@ -2,11 +2,6 @@ import { createClient } from '@supabase/supabase-js';
 
 /*
   En este archivo se configura la conexión con la base de datos de Supabase.
-  cómo es pequeño aún, he aprovechado para añadir aquí las funciones que
-  devuelven los datos de la base de datos.
-
-  En un futuro, cuando la aplicación crezca, se debería separar la configuración
-  de la conexión de las funciones que devuelven los datos.
 */
 
 const supabaseConnection = createClient(

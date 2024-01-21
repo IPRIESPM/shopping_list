@@ -6,8 +6,10 @@ import React, { createContext, useState } from 'react';
 const ModalContext = createContext();
 
 function ModalProvider({ children }) {
-  const [modalStatus, setActive] = useState(null);
+  // Un contexto para mostrar un modal.
 
+  const [modalStatus, setActive] = useState(null);
+  // Función switch para cambiar el estado del modal.
   const changeModal = () => {
     setActive(!modalStatus);
   };

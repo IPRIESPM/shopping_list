@@ -3,6 +3,9 @@ import React from 'react';
 import './productComponent.css';
 
 function ProductComponent({ product }) {
+  // Un componente que muestra un producto.
+  // recibe un objeto producto con los atributos
+  // del producto.
   let updatedImage = product.img_url;
   let updatedName = product.name;
   if (!updatedImage) {

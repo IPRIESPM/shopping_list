@@ -33,5 +33,9 @@ section.modal {
         color: var(--error);
       }
     }
+
+    header.modal-header{
+      background-color: transparent;
+    }
   }
 }

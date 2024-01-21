@@ -10,53 +10,70 @@ import ErrorComponent from '../../errorComponent/ErrorComponent';
 import LoadingComponent from '../../loadingComponent/LoadingComponent';
 
 function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
+  // Establecemos el producto vacio por defecto.
   const defaultProduct = {
     img_url: '',
     name: '',
     weight: 0,
     price: 0,
   };
+
+  // Traemos el contexto de los productos.
   const {
     updateProduct, createProduct, loading, error,
   } = useContext(ProductsContext);
+  // Establecemos los estados para el producto y el modo de creación.
   const [formProduct, setFormProduct] = useState(defaultProduct);
   const [createMode, setCreateMode] = useState(false);
 
+  // Traemos la función para navegar, entre páginas.
   const navigate = useNavigate();
 
+  // Función para actualizar el valor de los inputs.
   const updateValue = (event) => {
     const { name, value } = event.target;
+    // Reseteamos el mensaje de error, en el momento que se modifique el input.
     event.target.setCustomValidity('');
+    // Actualizamos el estado del producto.
     setFormProduct({ ...formProduct, [name]: value });
   };
 
   useEffect(() => {
+    // Si recibimos un producto, lo establecemos cómo producto.
     if (product) {
       setFormProduct(product);
     } else {
+      // Si no recibimos un producto, establecemos el producto por defecto y el modo de creación.
       setFormProduct(defaultProduct);
       setCreateMode(true);
     }
 
     return () => {
+      // Cuando se desmonte el componente, establecemos el producto por defecto.
       setFormProduct(defaultProduct);
     };
   }, []);
 
+  // Función para enviar el formulario.
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // Validamos los inputs.
     const isValid = validateInputs(event.target);
     event.target.reportValidity();
 
+    // Si los inputs son válidos, enviamos la petición.
     if (isValid) {
+      // Si estamos en modo de creación, creamos el producto.
+      // Si no, actualizamos el producto.
       let result;
-
       if (createMode) {
         result = await createProduct(formProduct);
       } else {
         result = await updateProduct(formProduct);
       }
 
+      // Si la petición es correcta, salimos del modo de creación o edición.
+      // Si estamos en modo de creación, navegamos a la página del producto.
       if (result) {
         if (createMode) {
           exitCreateMode();
@@ -64,8 +81,6 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
         } else {
           exitEditMode();
         }
-      } else {
-        event.target.setCustomValidity('Error en la petición');
       }
     }
   };
