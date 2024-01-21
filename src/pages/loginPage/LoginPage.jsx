@@ -76,7 +76,6 @@ function LoginPage() {
     data.email = data.email.trim();
     data.password = data.password.trim();
     const result = await logIn(data);
-    console.log(result);
 
     /*
       Si el resultado es falso, mostramos un error y salimos

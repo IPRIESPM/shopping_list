@@ -24,9 +24,7 @@ function UserProvider({ children }) {
 
   const checkUserLoggedLocal = async () => {
     const userSession = await checkUserIsLogged();
-    console.log('userSession', userSession);
     if (!user && userSession) {
-      console.log('userSession', userSession);
       setUser(userSession);
     }
   };
