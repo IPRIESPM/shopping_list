@@ -31,7 +31,6 @@ function UserProvider({ children }) {
   */
   const logIn = async (userData) => {
     const result = await loginUserDB(userData);
-    console.log(result);
 
     if (!result) {
       return false;
