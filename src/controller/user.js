@@ -1,17 +1,18 @@
 import supabaseConnection from '../config/supabase';
 
 const loginUserDB = async (userData) => {
+  const { email, password } = userData;
   try {
-    const { user, error } = await supabaseConnection.auth.signIn({
-      email: userData.email,
-      password: userData.password,
+    const { data, error } = await supabaseConnection.auth.signInWithPassword({
+      email,
+      password,
     });
 
     if (error) {
       return false;
     }
 
-    return user;
+    return data;
   } catch (error) {
     return false;
   }

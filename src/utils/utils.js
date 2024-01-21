@@ -33,7 +33,7 @@ const validateInputs = (targets) => {
       isValid = false;
     }
 
-    if (input.type === 'url' && validateUrl(input.value)) {
+    if (input.type === 'url' && !validateUrl(input.value)) {
       input.setCustomValidity('El campo debe ser una url');
       isValid = false;
     }

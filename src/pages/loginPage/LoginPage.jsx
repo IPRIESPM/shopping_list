@@ -6,8 +6,8 @@ import { EnvelopeAtFill, PersonFillLock } from 'react-bootstrap-icons';
 import './loginPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
-import { getFormData, validateEmail } from '../../utils/utils';
 import ErrorComponent from '../../components/errorComponent/ErrorComponent';
+import LoadingComponent from '../../components/loadingComponent/LoadingComponent';
 
 function LoginPage() {
   // Preparamos los estados
@@ -57,13 +57,13 @@ function LoginPage() {
       obtenemos los datos del formulario y los convertimos
       en un objeto para poder trabajar con ellos.
     */
-    const data = getFormData(event);
-
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
     /*
       Validamos los datos del formulario, si no son correctos
       mostramos un error y salimos de la función.
     */
-    if (!data.email || !data.password || !validateEmail(data.email)) {
+    if (!data.email || !data.password) {
       setErrorLogin(true);
       setLoading(false);
       return false;
@@ -75,6 +75,7 @@ function LoginPage() {
     */
     data.email = data.email.trim();
     data.password = data.password.trim();
+    console.log(data);
     const result = await logIn(data);
 
     /*
@@ -82,6 +83,7 @@ function LoginPage() {
       de la función.
     */
     if (!result) {
+      console.log(result);
       setErrorLogin(true);
       setLoading(false);
       return false;
@@ -128,9 +130,7 @@ function LoginPage() {
       )}
 
       {loading && (
-        <section className="loading">
-          <p>Cargando...</p>
-        </section>
+        <LoadingComponent message="Iniciando sesión" />
       )}
 
       {errorLogin && (

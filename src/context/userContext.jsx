@@ -30,9 +30,8 @@ function UserProvider({ children }) {
     token y la información del mismo.
   */
   const logIn = async (userData) => {
-    const { email, password } = userData;
-
-    const result = await loginUserDB(email, password);
+    const result = await loginUserDB(userData);
+    console.log(result);
 
     if (!result) {
       return false;
