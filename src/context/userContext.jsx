@@ -2,7 +2,9 @@
 /* eslint-disable react/prop-types */
 
 import React, { createContext, useState } from 'react';
-import { getUserDB, loginUserDB, logoutUserDB } from '../controller/user';
+import {
+  checkUserIsLogged, getUserDB, loginUserDB, logoutUserDB,
+} from '../controller/user';
 
 const UserContext = createContext();
 
@@ -19,6 +21,15 @@ function UserProvider({ children }) {
   */
   const [user, setUser] = useState(null);
   // const [nickname, setNickname] = useState('');
+
+  const checkUserLoggedLocal = async () => {
+    const userSession = await checkUserIsLogged();
+    console.log('userSession', userSession);
+    if (!user && userSession) {
+      console.log('userSession', userSession);
+      setUser(userSession);
+    }
+  };
 
   /*
     Función asíncrona para iniciar sesión.
@@ -89,6 +100,7 @@ function UserProvider({ children }) {
     logOut,
     logIn,
     getUser,
+    checkUserLoggedLocal,
   };
 
   /*
