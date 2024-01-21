@@ -75,15 +75,14 @@ function LoginPage() {
     */
     data.email = data.email.trim();
     data.password = data.password.trim();
-    console.log(data);
     const result = await logIn(data);
+    console.log(result);
 
     /*
       Si el resultado es falso, mostramos un error y salimos
       de la función.
     */
     if (!result) {
-      console.log(result);
       setErrorLogin(true);
       setLoading(false);
       return false;
