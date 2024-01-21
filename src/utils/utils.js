@@ -16,24 +16,25 @@ const validateNumber = (number) => {
 const validateInputs = (targets) => {
   let isValid = true;
   for (let i = 0; i < targets.length; i += 1) {
-    if (targets[i].type === 'number' && !validateNumber(targets[i].value)) {
-      targets[i].setCustomValidity(`El ${targets[i].name} debe ser un número`);
+    const input = targets[i];
+    if (input.type === 'number' && !validateNumber(input.value)) {
+      input.setCustomValidity('El campo debe ser un número');
       isValid = false;
     }
 
-    if (targets[i].type === 'email' && !validateEmail(targets[i].value)) {
-      targets[i].setCustomValidity(`El ${targets[i].name} debe ser un email válido`);
+    if (input.type === 'email' && !validateEmail(input.value)) {
+      input.setCustomValidity('El campo debe ser un correo electrónico válido');
       isValid = false;
     }
 
-    if (targets[i].type === 'text' && targets[i].name === 'name' && targets[i].value === '') {
-      targets[i].setCustomValidity('El nombre es obligatorio');
-      targets[i].focus();
+    if (input.type === 'text' && input.name === 'name' && input.value === '') {
+      input.setCustomValidity('El nombre es obligatorio');
+      input.focus();
       isValid = false;
     }
 
-    if (targets[i].type === 'url' && !validateUrl(targets[i].value) && targets[i].required) {
-      targets[i].setCustomValidity(`La ${targets[i].name} debe ser una url`);
+    if (input.type === 'url' && validateUrl(input.value)) {
+      input.setCustomValidity('El campo debe ser una url');
       isValid = false;
     }
   }

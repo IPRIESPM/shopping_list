@@ -77,7 +77,7 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
       { loading && <LoadingComponent message={createMode ? 'Creando producto' : 'Modificando producto'} />}
       <form onSubmit={handleSubmit} className="product-form">
         <label htmlFor="image">Url de la imagen: </label>
-        <input type="url" name="img_url" id="image" value={formProduct.image} onChange={updateValue} />
+        <input type="url" name="img_url" id="image" value={formProduct.img_url} onChange={updateValue} />
 
         <label htmlFor="name">Nombre</label>
         <input type="text" name="name" id="name" value={formProduct.name} onChange={updateValue} autoFocus />
