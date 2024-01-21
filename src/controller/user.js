@@ -8,7 +8,6 @@ const saveSessionInLocalStorage = (data) => {
 };
 
 const deleteSessionInLocalStorage = () => {
-  console.log('eliminando sesión');
   sessionStorage.removeItem('accessToken');
   sessionStorage.removeItem('expirationTime');
 };
@@ -32,7 +31,6 @@ const loginUserDB = async (userData) => {
 };
 
 const getUserDB = async () => {
-  console.log('getUserDB');
   try {
     const { data, error } = await supabaseConnection.auth.getUser();
 
@@ -73,11 +71,9 @@ const checkSessionExist = () => {
 
 const checkUserIsLogged = async () => {
   const isSessionValid = checkSessionExist();
-
   if (!isSessionValid) {
     return false;
   }
-
   const currentUser = await getUserDB();
 
   if (!currentUser) {
