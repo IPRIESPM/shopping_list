@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import './productListComponent.css';
 import { useNavigate } from 'react-router-dom';
 import ProductComponent from '../productComponent/ProductComponent';
-import { ProductsContext } from '../../context/productsContext';
+import { ProductsContext } from '../../../context/productsContext';
 
 function ProductListComponent() {
   const navigate = useNavigate();

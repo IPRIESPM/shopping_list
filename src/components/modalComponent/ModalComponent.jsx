@@ -1,44 +1,28 @@
-import React, { useContext } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useContext, useEffect } from 'react';
 import './modalComponent.css';
-import { useNavigate } from 'react-router-dom';
 import { ModalContext } from '../../context/modalContext';
-import { ProductsContext } from '../../context/productsContext';
+import ProductModal from './productModal/ProductModal';
 
-function ModalComponent() {
-  const navigate = useNavigate();
+function ModalComponent({ modalTitle }) {
   const { modalStatus, changeModal } = useContext(ModalContext);
-  const { selectedProduct, deleteProduct } = useContext(ProductsContext);
+
   const closeModal = () => {
     changeModal();
   };
 
-  const handleDelete = () => {
-    if (deleteProduct()) {
-      closeModal();
-      navigate('/products');
-    }
-  };
+  useEffect(() => {
+    document.title = `${modalTitle} - Hungry`;
+
+    return () => {
+      document.title = 'Hungry';
+    };
+  }, []);
 
   return (
     <section className={`modal ${modalStatus}`}>
       <div className="modal-container">
-        <div className="modal-header">
-          <h2 className="modal-title">
-            Eliminar
-            {' '}
-            {selectedProduct.name}
-            {' '}
-          </h2>
-        </div>
-        <div className="modal-body">
-          <p className="modal-text">
-            {`¿Estás seguro que deseas eliminar ${selectedProduct.name}?`}
-          </p>
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="modal-btn" onClick={handleDelete}>Aceptar</button>
-          <button type="button" className="modal-btn cancel" onClick={closeModal}>Cancelar</button>
-        </div>
+        <ProductModal closeModal={closeModal} />
       </div>
     </section>
   );

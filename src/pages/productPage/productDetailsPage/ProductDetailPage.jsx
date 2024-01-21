@@ -3,9 +3,9 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Pencil, PencilFill, Trash2 } from 'react-bootstrap-icons';
 import { ProductsContext } from '../../../context/productsContext';
-import ProductComponent from '../../../components/productComponent/ProductComponent';
+import ProductComponent from '../../../components/products/productComponent/ProductComponent';
 import './productDetailPage.css';
-import ProductFormComponent from '../../../components/productFormComponent/ProductFormComponent';
+import ProductFormComponent from '../../../components/products/productFormComponent/ProductFormComponent';
 import { ModalContext } from '../../../context/modalContext';
 import ModalComponent from '../../../components/modalComponent/ModalComponent';
 

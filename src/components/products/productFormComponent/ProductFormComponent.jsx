@@ -3,11 +3,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { validateInputs } from '../../utils/utils';
+import { validateInputs } from '../../../utils/utils';
 import './productFormComponent.css';
-import { ProductsContext } from '../../context/productsContext';
-import ErrorComponent from '../errorComponent/ErrorComponent';
-import LoadingComponent from '../loadingComponent/LoadingComponent';
+import { ProductsContext } from '../../../context/productsContext';
+import ErrorComponent from '../../errorComponent/ErrorComponent';
+import LoadingComponent from '../../loadingComponent/LoadingComponent';
 
 function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
   const defaultProduct = {

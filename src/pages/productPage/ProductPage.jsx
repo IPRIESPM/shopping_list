@@ -5,7 +5,7 @@ import FilterComponent from '../../components/filerComponent/FilterComponent';
 import { ProductsContext } from '../../context/productsContext';
 import ErrorComponent from '../../components/errorComponent/ErrorComponent';
 import LoadingComponent from '../../components/loadingComponent/LoadingComponent';
-import ProductListComponent from '../../components/productListComponent/ProductListComponent';
+import ProductListComponent from '../../components/products/productListComponent/ProductListComponent';
 
 function ProductPage() {
   // Preparamos los estados
