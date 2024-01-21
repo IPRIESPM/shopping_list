@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  FunnelFill, PlusCircle, SortDown, SortUp,
+  Funnel, PlusCircle, SortDown, SortUp,
 } from 'react-bootstrap-icons';
 import './filterComponent.css';
 import { Link } from 'react-router-dom';
@@ -41,7 +41,7 @@ function FilterComponent() {
 
       <fieldset>
         <p>
-          <FunnelFill />
+          <Funnel />
           Filtrar:
         </p>
         <select name="filter" onChange={changeFilterList} value={filterContext}>

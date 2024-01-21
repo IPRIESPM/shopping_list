@@ -91,19 +91,28 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
 
       { loading && <LoadingComponent message={createMode ? 'Creando producto' : 'Modificando producto'} />}
       <form onSubmit={handleSubmit} className="product-form">
-        <label htmlFor="image">Url de la imagen: </label>
-        <input type="url" name="img_url" id="image" value={formProduct.img_url} onChange={updateValue} />
+        <section>
+          <fieldset>
+            <label htmlFor="image">Url de la imagen: </label>
+            <input type="url" name="img_url" id="image" value={formProduct.img_url} onChange={updateValue} />
+          </fieldset>
 
-        <label htmlFor="name">Nombre</label>
-        <input type="text" name="name" id="name" value={formProduct.name} onChange={updateValue} autoFocus />
-
-        <label htmlFor="price">Precio €</label>
-        <input type="text" name="price" id="price" value={formProduct.price} onChange={updateValue} />
-
-        <label htmlFor="weight">Peso u.</label>
-        <input type="number" name="weight" id="weight" value={formProduct.weight} onChange={updateValue} />
-
-        <input type="submit" value={createMode ? 'Crear' : 'Modificar'} />
+          <fieldset>
+            <label htmlFor="name">Nombre</label>
+            <input type="text" name="name" id="name" value={formProduct.name} onChange={updateValue} autoFocus />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="price">Precio €</label>
+            <input type="text" name="price" id="price" value={formProduct.price} onChange={updateValue} />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="weight">Peso u.</label>
+            <input type="number" name="weight" id="weight" value={formProduct.weight} onChange={updateValue} />
+          </fieldset>
+        </section>
+        <p>
+          <input type="submit" value={createMode ? 'Crear' : 'Modificar'} />
+        </p>
       </form>
     </section>
   );

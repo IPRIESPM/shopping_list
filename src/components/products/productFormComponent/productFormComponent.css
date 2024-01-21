@@ -1,43 +1,64 @@
-section.product-form{
-    display: flex;
+section.product-form {
+  display: flex;
 
-    & form.product-form{
+  & form.product-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+
+    & section{
         display: flex;
         flex-flow: wrap;
         align-items: center;
         justify-content: center;
         padding: 0;
         border: none;
-    
-        & input{
-            width: 100px;
-            height: 30px;
-            border-radius: 8px;
-            border: 0.5px solid var(--font-white);
-            padding: 15px 22px;
-            transition: all 0.6s ease-in-out;
-    
-            &:hover{
-                border: 1px solid var(--yellow);
-                transition: all 0.10s ease-in-out;
-            }
-    
-            &[type="submit"]{
-                height: max-content;
-                width: max-content;
-                padding: 15px 22px;
-                transition: all 0.3s ease-in-out;
-    
-                &:hover{
-                    background-color:transparent;
-                    color: var(--yellow);
-                }
-            }
-    
-            &:invalid{
-                border: 1px solid var(--error);
-                transition: all 0.10s ease-in-out;
-            }
-        }
     }
+
+    & fieldset {
+      text-align: left;
+
+      & label{
+        padding:0;
+        margin: 0;
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    & input {
+      width: 100px;
+      height: 30px;
+      border-radius: 8px;
+      border: 0.5px solid var(--font-white);
+      padding: 15px 22px;
+      transition: all 0.6s ease-in-out;
+
+      &:hover {
+        border: 1px solid var(--yellow);
+        transition: all 0.1s ease-in-out;
+      }
+
+      &[type="submit"] {
+        height: max-content;
+        width: max-content;
+        padding: 15px 22px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          background-color: transparent;
+          color: var(--yellow);
+        }
+      }
+
+      &:invalid {
+        border: 1px solid var(--error);
+        transition: all 0.1s ease-in-out;
+      }
+    }
+
+  }
 }
