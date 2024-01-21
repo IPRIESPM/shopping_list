@@ -10,6 +10,15 @@ import { ModalContext } from '../../../context/modalContext';
 import ModalComponent from '../../../components/modalComponent/ModalComponent';
 
 function ProductDetailPage() {
+  /*
+    Obtenemos el id del producto de la url, y lo usamos para obtener el producto
+    de la base de datos.
+    Preparamos los estados para el modo de edición y el modo de creación.
+    Si el id es 'new', cambiamos el título de la página y activamos el modo de creación.
+    Si el id no es 'new', buscamos el producto en la base de datos.
+    Si no lo encontramos, redirigimos a la página de productos.
+    Si lo encontramos, cambiamos el título de la página.
+  */
   const { id } = useParams();
   const { selectedProduct, selectProductById, changeSelectedProduct } = useContext(ProductsContext);
   const { changeModal, modalStatus } = useContext(ModalContext);

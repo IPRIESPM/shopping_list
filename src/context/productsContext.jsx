@@ -86,10 +86,13 @@ function ProductsProvider({ children }) {
     getProductsFilter(filterContext, orderContext, searchContext, orderNumericContext);
   };
 
+  // Función para cambiar el orden de la lista.
   const changeListOrder = (event) => {
     setOrder(event.target.value);
   };
 
+  // Función para cambiar el filtro de la lista y resetear el buscador.
+  // De esta manera evitamos que busque tipos de datos no compatibles.
   const changeFilterList = (event) => {
     setFilter(event.target.value);
     setSearch('');
@@ -97,22 +100,27 @@ function ProductsProvider({ children }) {
     setOrderNumeric(event.target.value !== 'name');
   };
 
+  // Función para cambiar el texto del buscador.
   const changeListSearch = (event) => {
     const { value } = event.target;
     const trimmedValue = value.trim();
     setSearch(trimmedValue);
   };
 
+  // Función para cambiar el producto seleccionado.
+  // Se utiliza para ver, editar y eliminar.
   const changeSelectedProduct = (product) => {
     setSelectedProduct(product);
   };
 
+  // Función para seleccionar un producto por su id.
   const selectProductById = (id) => {
     const product = products.find((item) => item.id === id);
     setSelectedProduct(product);
     return product;
   };
 
+  // Función para calcular el precio medio de los productos.
   const calcPriceMedium = () => {
     const avgProductsOfPrice = products.reduce(
       (acc, product) => acc + product.price,
@@ -121,7 +129,10 @@ function ProductsProvider({ children }) {
     return Math.round(avgProductsOfPrice / Math.max(1, products.length));
   };
 
+  // Función para actualizar un producto.
   const updateProduct = async (product) => {
+    // Buscamos el producto en el array de productos.
+    // Si lo encontramos, lo actualizamos en la base de datos.
     const index = products.findIndex((item) => item.id === product.id);
     if (index >= 0) {
       setLoading(true);
@@ -143,6 +154,7 @@ function ProductsProvider({ children }) {
     return false;
   };
 
+  // Función para crear un producto, en la base de datos.
   const createProduct = async (product) => {
     setLoading(true);
     const result = await createProductDB(product);
@@ -161,6 +173,7 @@ function ProductsProvider({ children }) {
     return result;
   };
 
+  // Función para eliminar un producto, en la base de datos.
   const deleteProduct = () => {
     setLoading(true);
     const result = deleteProductDB(selectedProduct.id);

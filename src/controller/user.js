@@ -1,5 +1,9 @@
 import supabaseConnection from '../config/supabase';
 
+/* conjunto de funciones que se encargan de hacer las consultas a la base de datos
+  y retornar los datos que se necesitan.
+*/
+
 const saveSessionInLocalStorage = (data) => {
   const { access_token: accessToken, expires_in: expiresIn } = data;
   const expirationTime = new Date().getTime() + expiresIn * 1000;

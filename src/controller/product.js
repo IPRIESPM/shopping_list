@@ -1,5 +1,10 @@
 import supabaseConnection from '../config/supabase';
 
+/*
+  conjunto de funciones que se encargan de hacer las consultas a la base de datos
+  y retornar los datos que se necesitan.
+*/
+
 const updateProductDB = async (userData) => {
   try {
     const { data, error } = await supabaseConnection
