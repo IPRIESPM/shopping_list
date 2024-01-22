@@ -16,4 +16,21 @@ const getShoppingListsDb = async () => {
   }
 };
 
-export default getShoppingListsDb;
+const getShoppingListByIdB = async (id) => {
+  try {
+    const { data, error } = await supabaseConnection
+      .from('shopping_list')
+      .select()
+      .eq('id', id);
+
+    if (error) {
+      return false;
+    }
+
+    return data[0];
+  } catch (error) {
+    return false;
+  }
+};
+
+export { getShoppingListsDb, getShoppingListByIdB };

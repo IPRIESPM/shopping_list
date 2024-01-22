@@ -2,13 +2,14 @@
 /* eslint-disable react/prop-types */
 
 import React, { createContext, useState } from 'react';
-import getShoppingListsDb from '../controller/shoppingLists';
+import { getShoppingListsDb } from '../controller/shoppingLists';
 
 const ShoppingListContext = createContext();
 
 function ShoppingListProvider({ children }) {
-  const defaultShoppingList = [];
-  const [shoppingLists, setShoppingLists] = useState([]);
+  const defaultShoppingLists = [];
+  const [shoppingLists, setShoppingLists] = useState(defaultShoppingLists);
+  const [shoppingListSelected, setShoppingListSelected] = useState();
   const [loadingShoppingLists, setLoadingShoppingLists] = useState(false);
   const [errorShoppingLists, setErrorShoppingLists] = useState(false);
 
@@ -18,10 +19,10 @@ function ShoppingListProvider({ children }) {
     const response = await getShoppingListsDb();
 
     if (!response) {
-      setShoppingLists(defaultShoppingList);
+      setShoppingLists(defaultShoppingLists);
       setErrorShoppingLists(true);
       setLoadingShoppingLists(false);
-      return defaultShoppingList;
+      return defaultShoppingLists;
     }
 
     setLoadingShoppingLists(false);
@@ -31,9 +32,11 @@ function ShoppingListProvider({ children }) {
 
   const values = {
     shoppingLists,
+    shoppingListSelected,
     loadingShoppingLists,
     errorShoppingLists,
     getShoppingLists,
+    setShoppingListSelected,
   };
 
   /*
