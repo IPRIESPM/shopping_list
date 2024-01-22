@@ -33,4 +33,23 @@ const getShoppingListByIdB = async (id) => {
   }
 };
 
-export { getShoppingListsDb, getShoppingListByIdB };
+const getProductsByShoppingListId = async (id) => {
+  try {
+    const { data, error } = await supabaseConnection
+      .from('productos')
+      .select('productos.*')
+      .innerJoin('productos_lista', { 'productos.id': 'productos_lista.id_producto' })
+      .innerJoin('lista_compra', { 'productos_lista.id_lista_compra': 'lista_compra.id' })
+      .eq('lista_compra.id', id);
+
+    if (error) {
+      return false;
+    }
+
+    return data;
+  } catch (error) {
+    return false;
+  }
+};
+
+export { getShoppingListsDb, getShoppingListByIdB, getProductsByShoppingListId };
