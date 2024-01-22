@@ -2,43 +2,52 @@ form.filter-component {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     height: 100%;
     width: 90vw;
     border: none;
+  box-shadow: 0 0 2px var(--font-white);
 
-    & fieldset {
+    & section.filters{
       display: flex;
       flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      border: none;
 
-      & input{
-        padding: 1.8em 0;
-      }
-
-      & select {
+      & fieldset {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 1rem;
         border: none;
-        border-bottom: 1px solid var(--yellow);
-        padding: 15px 1em;
-        background-color: transparent;
-        color: var(--font-white);
-        text-decoration: none;
-        font-size: 1.5em;
-        font-family: "Dancing Script", cursive;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-
-        & option {
-          font-family:  Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-          font-size: 0.8em;
-          background-color: var(--font-white);
-          color: var(--font-black);
+  
+        & input{
+          padding: 1.8em 0;
+        }
+  
+        & select {
+          border: none;
+          border-bottom: 1px solid var(--yellow);
+          padding: 15px 1em;
+          background-color: transparent;
+          color: var(--font-white);
+          text-decoration: none;
+          font-size: 1.5em;
+          font-family: "Dancing Script", cursive;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+  
+          & option {
+            font-family:  Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+            font-size: 0.8em;
+            background-color: var(--font-white);
+            color: var(--font-black);
+          }
         }
       }
     }
+
+   
 
     & p{
       display: flex;

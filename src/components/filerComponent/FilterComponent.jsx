@@ -22,41 +22,44 @@ function FilterComponent() {
   };
   return (
     <form onSubmit={handleForm} onChange={handleForm} className="filter-component">
-      <fieldset>
-        <p>Ordenar por</p>
-        <select name="order" onChange={changeListOrder} value={orderContext}>
-          <option value="name">Nombre</option>
-          <option value="weight">Peso</option>
-          <option value="price">Precio</option>
-        </select>
-        <button type="button" onClick={changeFilterListOrder}>
-          {filterAscending ? <SortDown /> : <SortUp />}
-        </button>
-      </fieldset>
+      <section className="filters">
+        <fieldset>
+          <p>
+            <Funnel />
+            Filtrar:
+          </p>
+          <select name="filter" onChange={changeFilterList} value={filterContext}>
+            <option value="name">Nombre</option>
+            <option value="weight">Peso</option>
+            <option value="price">Precio</option>
+          </select>
+          <input
+            type="search"
+            name="search"
+            onChange={changeListSearch}
+            value={searchContext}
+            placeholder="Tomate"
+          />
+        </fieldset>
+        <fieldset>
+          <p>Ordenar por</p>
+          <select name="order" onChange={changeListOrder} value={orderContext}>
+            <option value="name">Nombre</option>
+            <option value="weight">Peso</option>
+            <option value="price">Precio</option>
+          </select>
+          <button type="button" onClick={changeFilterListOrder}>
+            {filterAscending ? <SortDown /> : <SortUp />}
+          </button>
+        </fieldset>
+
+      </section>
 
       <Link to="/products/new" className="add">
         Añadir producto
         <PlusCircle />
       </Link>
 
-      <fieldset>
-        <p>
-          <Funnel />
-          Filtrar:
-        </p>
-        <select name="filter" onChange={changeFilterList} value={filterContext}>
-          <option value="name">Nombre</option>
-          <option value="weight">Peso</option>
-          <option value="price">Precio</option>
-        </select>
-        <input
-          type="search"
-          name="search"
-          onChange={changeListSearch}
-          value={searchContext}
-          placeholder="Tomate"
-        />
-      </fieldset>
     </form>
   );
 }

@@ -1,6 +1,8 @@
 section.product-page {
   display: flex;
   align-items: center;
+  gap: 4rem;
+  margin-top: 3em;
 
   & h1{
     display: flex;
