@@ -3,6 +3,7 @@ section.product-page {
   align-items: center;
   gap: 4rem;
   margin-top: 3em;
+  margin-bottom: 3em;
 
   & h1{
     display: flex;

@@ -38,7 +38,7 @@ function ProductPage() {
       {error && (
         <ErrorComponent message="Error cargando los productos" />
       )}
-      {!error && (
+      {(!error && !loading) && (
         <ProductListComponent />
       )}
     </section>
