@@ -7,6 +7,7 @@ import NavComponent from './components/navComponent/NavComponent';
 import { UserProvider } from './context/userContext';
 import { ProductsProvider } from './context/productsContext';
 import { ModalProvider } from './context/modalContext';
+import { ShoppingListProvider } from './context/shoppingListContext';
 
 function App() {
   /*
@@ -31,11 +32,13 @@ function App() {
         <HeaderComponent />
         <NavComponent />
         <ProductsProvider>
-          <ModalProvider>
-            <main>
-              <RouterComponent />
-            </main>
-          </ModalProvider>
+          <ShoppingListProvider>
+            <ModalProvider>
+              <main>
+                <RouterComponent />
+              </main>
+            </ModalProvider>
+          </ShoppingListProvider>
         </ProductsProvider>
       </BrowserRouter>
     </UserProvider>

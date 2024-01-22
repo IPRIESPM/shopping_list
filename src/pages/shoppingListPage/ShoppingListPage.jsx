@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { useEffect, useContext } from 'react';
 import './shoppingListPage.css';
+import { ShoppingListProvider } from '../../context/shoppingListContext';
 
 function ShoppingListPage() {
   // Página para ver las listas de la compra.
-  // esta página no está implementada, para este ejercicio no es necesaria.
-  // const defaultShoppingList = [];
-  // const [ShoppingLists] = useState([defaultShoppingList]);
+
+  const { getShoppingLists } = useContext(ShoppingListProvider);
+
+  useEffect(() => {
+    document.title = 'Listas de la compra - Hungry';
+    getShoppingLists();
+    return () => {
+      document.title = 'Hungry';
+    };
+  }, []);
 
   return (
     <section className="shopping-list-page">
