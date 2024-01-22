@@ -1,11 +1,16 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Basket } from 'react-bootstrap-icons';
+import { ShoppingListContext } from '../../context/shoppingListContext';
+import LoadingComponent from '../../components/loadingComponent/LoadingComponent';
+import ErrorComponent from '../../components/errorComponent/ErrorComponent';
 import './shoppingListPage.css';
-import { ShoppingListProvider } from '../../context/shoppingListContext';
 
 function ShoppingListPage() {
   // Página para ver las listas de la compra.
-
-  const { getShoppingLists } = useContext(ShoppingListProvider);
+  const {
+    getShoppingLists, shoppingLists, loadingShoppingLists, errorShoppingLists,
+  } = useContext(ShoppingListContext);
 
   useEffect(() => {
     document.title = 'Listas de la compra - Hungry';
@@ -20,18 +25,27 @@ function ShoppingListPage() {
       <nav>
         <h2>Listado de la compra</h2>
       </nav>
-      {/* <ul>
-        {ShoppingLists.map((ShoppingList) => (
-          <li key={ShoppingList.id}>
-            <Link to={`/shopping_list/${ShoppingList.id}`}>
-              <b>
-                {ShoppingList.name}
-              </b>
-              <p>{ShoppingList.description}</p>
-            </Link>
-          </li>
-        ))}
-      </ul> */}
+
+      {loadingShoppingLists && <LoadingComponent message="Cargando listas" />}
+
+      {errorShoppingLists && <ErrorComponent message="Error al cargar las listas" />}
+
+      {((!loadingShoppingLists && !errorShoppingLists) && shoppingLists) && (
+        <ul>
+          {shoppingLists.map((ShoppingList) => (
+            <li key={ShoppingList.id}>
+              <Link to={`/shopping_list/${ShoppingList.id}`}>
+                <Basket />
+                <b>
+                  {ShoppingList.name}
+                </b>
+                <p>{ShoppingList.description}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+
     </section>
   );
 }

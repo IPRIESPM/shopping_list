@@ -8,7 +8,7 @@ const ShoppingListContext = createContext();
 
 function ShoppingListProvider({ children }) {
   const defaultShoppingList = [];
-  const [ShoppingLists, setShoppingLists] = useState([]);
+  const [shoppingLists, setShoppingLists] = useState([]);
   const [loadingShoppingLists, setLoadingShoppingLists] = useState(false);
   const [errorShoppingLists, setErrorShoppingLists] = useState(false);
 
@@ -30,7 +30,7 @@ function ShoppingListProvider({ children }) {
   };
 
   const values = {
-    ShoppingLists,
+    shoppingLists,
     loadingShoppingLists,
     errorShoppingLists,
     getShoppingLists,

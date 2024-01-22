@@ -9,9 +9,7 @@ import ProductListComponent from '../../components/products/productListComponent
 
 function ProductPage() {
   // Preparamos los estados
-  const {
-    error, getProducts, loading,
-  } = useContext(ProductsContext);
+  const { error, getProducts, loading } = useContext(ProductsContext);
 
   // al desmontar el componente, cambiamos el título de la página.
   useEffect(() => {
