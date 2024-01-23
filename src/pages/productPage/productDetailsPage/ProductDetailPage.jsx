@@ -68,7 +68,6 @@ function ProductDetailPage() {
             <ProductFormComponent
               product={selectedProduct}
               exitEditMode={exitEditMode}
-
             />
           )}
           <section className="options">

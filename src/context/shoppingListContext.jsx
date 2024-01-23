@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { createContext, useState } from 'react';
-import { getShoppingListsDb } from '../controller/shoppingLists';
+import { getShoppingListByIDB, getShoppingListsDb, getProductsByShoppingListId } from '../controller/shoppingLists';
 
 const ShoppingListContext = createContext();
 
@@ -30,6 +30,37 @@ function ShoppingListProvider({ children }) {
     return response;
   };
 
+  const getShoppingListByID = async (id) => {
+    setLoadingShoppingLists(true);
+    setErrorShoppingLists(false);
+    const result = await getShoppingListByIDB(id);
+    if (!result) {
+      setErrorShoppingLists(true);
+      setLoadingShoppingLists(false);
+      return false;
+    }
+
+    setLoadingShoppingLists(false);
+    setShoppingListSelected(result);
+    return result;
+  };
+
+  const getProductsByShoppingListID = async (id) => {
+    setLoadingShoppingLists(true);
+    setErrorShoppingLists(false);
+    const result = await getProductsByShoppingListId(id);
+    if (!result) {
+      setErrorShoppingLists(true);
+      setLoadingShoppingLists(false);
+      return false;
+    }
+
+    setLoadingShoppingLists(false);
+
+    // setShoppingListSelected({ ...shoppingListSelected, products: result });
+    return shoppingListSelected;
+  };
+
   const values = {
     shoppingLists,
     shoppingListSelected,
@@ -37,6 +68,8 @@ function ShoppingListProvider({ children }) {
     errorShoppingLists,
     getShoppingLists,
     setShoppingListSelected,
+    getShoppingListByID,
+    getProductsByShoppingListID,
   };
 
   /*

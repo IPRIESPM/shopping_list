@@ -16,7 +16,7 @@ const getShoppingListsDb = async () => {
   }
 };
 
-const getShoppingListByIdB = async (id) => {
+const getShoppingListByIDB = async (id) => {
   try {
     const { data, error } = await supabaseConnection
       .from('shopping_list')
@@ -52,4 +52,4 @@ const getProductsByShoppingListId = async (id) => {
   }
 };
 
-export { getShoppingListsDb, getShoppingListByIdB, getProductsByShoppingListId };
+export { getShoppingListsDb, getShoppingListByIDB, getProductsByShoppingListId };
