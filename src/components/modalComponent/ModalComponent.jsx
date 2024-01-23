@@ -3,10 +3,11 @@ import React, { useContext, useEffect } from 'react';
 import './modalComponent.css';
 import { ModalContext } from '../../context/modalContext';
 import ProductModal from './productModal/ProductModal';
+import ShoppingListModal from './shoppingListModal/ShoppingListModal';
 
-function ModalComponent({ modalTitle }) {
+function ModalComponent({ modalTitle, modalType = 'product' }) {
   // Nostraemos el contexto del modal.
-  const { modalStatus, changeModal } = useContext(ModalContext);
+  const { modalStatus, changeModal = 'product' } = useContext(ModalContext);
   // Función callback para cerrar el modal.
   const closeModal = () => {
     changeModal();
@@ -25,7 +26,14 @@ function ModalComponent({ modalTitle }) {
   return (
     <section className={`modal ${modalStatus}`}>
       <div className="modal-container">
-        <ProductModal closeModal={closeModal} />
+
+        {modalType === 'product' && (
+          <ProductModal closeModal={closeModal} />
+        )}
+
+        {modalType === 'shoppingList' && (
+          <ShoppingListModal closeModal={closeModal} />
+        )}
       </div>
     </section>
   );

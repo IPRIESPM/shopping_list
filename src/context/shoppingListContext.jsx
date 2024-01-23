@@ -2,14 +2,20 @@
 /* eslint-disable react/prop-types */
 
 import React, { createContext, useState } from 'react';
-import { getShoppingListByIDB, getShoppingListsDb, getProductsByShoppingListIdBD } from '../controller/shoppingLists';
+import {
+  getShoppingListByIDB, getShoppingListsDb, getProductsByShoppingListIdBD, createShoppingListDB,
+  deleteShoppingListDB,
+} from '../controller/shoppingLists';
 
 const ShoppingListContext = createContext();
 
 function ShoppingListProvider({ children }) {
   const defaultShoppingLists = [];
+  const defaultShoppingListSelected = {
+    products: [],
+  };
   const [shoppingLists, setShoppingLists] = useState(defaultShoppingLists);
-  const [shoppingListSelected, setShoppingListSelected] = useState();
+  const [shoppingListSelected, setShoppingListSelected] = useState(defaultShoppingListSelected);
   const [loadingShoppingLists, setLoadingShoppingLists] = useState(false);
   const [errorShoppingLists, setErrorShoppingLists] = useState(false);
 
@@ -30,21 +36,6 @@ function ShoppingListProvider({ children }) {
     return response;
   };
 
-  const getShoppingListByID = async (id) => {
-    setLoadingShoppingLists(true);
-    setErrorShoppingLists(false);
-    const result = await getShoppingListByIDB(id);
-    if (!result) {
-      setErrorShoppingLists(true);
-      setLoadingShoppingLists(false);
-      return false;
-    }
-
-    setLoadingShoppingLists(false);
-    setShoppingListSelected(result);
-    return result;
-  };
-
   const getProductsByShoppingListID = async (id) => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
@@ -57,8 +48,88 @@ function ShoppingListProvider({ children }) {
 
     setLoadingShoppingLists(false);
 
-    // setShoppingListSelected({ ...shoppingListSelected, products: result });
+    setShoppingListSelected({ ...shoppingListSelected, products: result });
     return result;
+  };
+
+  const getShoppingListByID = async (id) => {
+    setLoadingShoppingLists(true);
+    setErrorShoppingLists(false);
+    const listData = await getShoppingListByIDB(id);
+    if (!listData) {
+      setErrorShoppingLists(true);
+      setLoadingShoppingLists(false);
+      return false;
+    }
+
+    const productsResult = await getProductsByShoppingListID(id);
+    if (!productsResult) {
+      setErrorShoppingLists(true);
+      setLoadingShoppingLists(false);
+      return false;
+    }
+
+    const listDataWithProducts = { ...listData, products: productsResult };
+    setLoadingShoppingLists(false);
+    setShoppingListSelected(listDataWithProducts);
+    return listDataWithProducts;
+  };
+
+  const getShoppingListWeight = () => {
+    let weight = 0;
+    if (!shoppingListSelected || !shoppingListSelected.products) return weight;
+
+    shoppingListSelected.products.forEach((product) => {
+      weight += product.amount * product.product.weight;
+    });
+
+    return weight;
+  };
+
+  const getShoppingListPrice = () => {
+    let price = 0;
+    if (!shoppingListSelected || !shoppingListSelected.products) return price;
+
+    shoppingListSelected.products.forEach((product) => {
+      price += product.amount * product.product.price;
+    });
+
+    return price;
+  };
+
+  const isCarNeeded = (weight) => {
+    const weightLimit = 10000;
+
+    if (weight >= weightLimit) return true;
+
+    return false;
+  };
+
+  const createShoppingList = async (name) => {
+    setLoadingShoppingLists(true);
+    const response = await createShoppingListDB(name);
+
+    if (!response) {
+      setErrorShoppingLists(true);
+      return false;
+    }
+    setShoppingLists([...shoppingLists, response[0]]);
+    setLoadingShoppingLists(false);
+    return response;
+  };
+
+  const deleteShoppingList = async (id) => {
+    setLoadingShoppingLists(true);
+    const response = await deleteShoppingListDB(id);
+
+    if (!response) {
+      setErrorShoppingLists(true);
+      return false;
+    }
+    console.log(response);
+    // setShoppingLists([...shoppingLists, response[0]]);
+    setLoadingShoppingLists(false);
+    return response;
   };
 
   const values = {
@@ -66,10 +137,16 @@ function ShoppingListProvider({ children }) {
     shoppingListSelected,
     loadingShoppingLists,
     errorShoppingLists,
+    createShoppingList,
+    deleteShoppingList,
     getShoppingLists,
     setShoppingListSelected,
     getShoppingListByID,
     getProductsByShoppingListID,
+    getShoppingListWeight,
+    getShoppingListPrice,
+    isCarNeeded,
+
   };
 
   /*

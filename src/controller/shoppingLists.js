@@ -39,7 +39,6 @@ const getProductsByShoppingListIdBD = async (id) => {
       .from('shopping_list_product')
       .select(`
       amount,
-      product_id,
       product(*)
     `)
       .eq('shopping_list_id', id);
@@ -55,9 +54,38 @@ const getProductsByShoppingListIdBD = async (id) => {
     return false;
   }
 };
+const createShoppingListDB = async (name) => {
+  const { data, error } = await supabaseConnection
+    .from('shopping_list')
+    .insert([
+      { name },
+    ])
+    .select();
 
+  if (error) {
+    console.log(error);
+    return false;
+  }
+
+  return data;
+};
+const deleteShoppingListDB = async (id) => {
+  const { data, error } = await supabaseConnection
+    .from('shopping_list')
+    .delete()
+    .eq('id', id)
+    .select();
+
+  if (error) {
+    return false;
+  }
+
+  return data;
+};
 export {
   getShoppingListsDb,
   getShoppingListByIDB,
   getProductsByShoppingListIdBD,
+  createShoppingListDB,
+  deleteShoppingListDB,
 };

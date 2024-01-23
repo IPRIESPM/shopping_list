@@ -2,7 +2,7 @@
 import React from 'react';
 import './productComponent.css';
 
-function ProductComponent({ product }) {
+function ProductComponent({ product, amount }) {
   // Un componente que muestra un producto.
   // recibe un objeto producto con los atributos
   // del producto.
@@ -24,8 +24,15 @@ function ProductComponent({ product }) {
       </p>
       <p>
         {product.weight}
-        u.
+        gr
       </p>
+      {amount && (
+      <p>
+        {amount}
+        uds.
+      </p>
+      )}
+
     </section>
 
   );

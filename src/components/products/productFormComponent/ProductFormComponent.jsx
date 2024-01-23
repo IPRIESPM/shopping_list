@@ -106,7 +106,7 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
             <input type="text" name="price" id="price" value={formProduct.price} onChange={updateValue} />
           </fieldset>
           <fieldset>
-            <label htmlFor="weight">Peso u.</label>
+            <label htmlFor="weight">Peso gr</label>
             <input type="number" name="weight" id="weight" value={formProduct.weight} onChange={updateValue} />
           </fieldset>
         </section>
