@@ -33,23 +33,31 @@ const getShoppingListByIDB = async (id) => {
   }
 };
 
-const getProductsByShoppingListId = async (id) => {
+const getProductsByShoppingListIdBD = async (id) => {
   try {
     const { data, error } = await supabaseConnection
-      .from('productos')
-      .select('productos.*')
-      .innerJoin('productos_lista', { 'productos.id': 'productos_lista.id_producto' })
-      .innerJoin('lista_compra', { 'productos_lista.id_lista_compra': 'lista_compra.id' })
-      .eq('lista_compra.id', id);
+      .from('shopping_list_product')
+      .select(`
+      amount,
+      product_id,
+      product(*)
+    `)
+      .eq('shopping_list_id', id);
 
     if (error) {
+      console.log(error);
       return false;
     }
 
     return data;
   } catch (error) {
+    console.log(error);
     return false;
   }
 };
 
-export { getShoppingListsDb, getShoppingListByIDB, getProductsByShoppingListId };
+export {
+  getShoppingListsDb,
+  getShoppingListByIDB,
+  getProductsByShoppingListIdBD,
+};

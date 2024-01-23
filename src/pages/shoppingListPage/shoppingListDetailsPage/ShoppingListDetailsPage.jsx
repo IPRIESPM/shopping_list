@@ -10,25 +10,41 @@ function ShoppingListDetailsPage() {
   const { id } = useParams();
   const { navigate } = useNavigate();
   const {
-    getShoppingListByID, shoppingListSelected, loadingShoppingLists, errorShoppingLists,
+    getShoppingListByID,
+    shoppingListSelected,
+    loadingShoppingLists,
+    errorShoppingLists,
+    getProductsByShoppingListID,
   } = useContext(ShoppingListContext);
+
+  const handleButton = async () => {
+    const result = await getProductsByShoppingListID(shoppingListSelected.id);
+    console.log(result);
+  };
+
   useEffect(() => {
     if (!id) navigate('/shopping-lists');
     getShoppingListByID(id);
-    console.log('ShoppingListDetailsPage', getShoppingListByID(id));
   }, []);
+
   return (
     <section className="shopping-list-details-page">
-      <h1>
-        Ficha de
-        {' '}
-        {shoppingListSelected.name}
-      </h1>
+      { shoppingListSelected && (
+        <h1>
+          {' '}
+          Ficha de
+          {' '}
+          {shoppingListSelected.name}
+          {' '}
+        </h1>
+      )}
       {loadingShoppingLists && <LoadingComponent message="Cargando lista" />}
       {errorShoppingLists && <ErrorComponent message="Error al cargar las lista" />}
       {((!loadingShoppingLists && !errorShoppingLists) && shoppingListSelected) && (
         <ProductListComponent products={shoppingListSelected.products} />
       )}
+
+      <button type="button" onClick={handleButton}>test</button>
     </section>
   );
 }

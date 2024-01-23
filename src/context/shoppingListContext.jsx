@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { createContext, useState } from 'react';
-import { getShoppingListByIDB, getShoppingListsDb, getProductsByShoppingListId } from '../controller/shoppingLists';
+import { getShoppingListByIDB, getShoppingListsDb, getProductsByShoppingListIdBD } from '../controller/shoppingLists';
 
 const ShoppingListContext = createContext();
 
@@ -48,7 +48,7 @@ function ShoppingListProvider({ children }) {
   const getProductsByShoppingListID = async (id) => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
-    const result = await getProductsByShoppingListId(id);
+    const result = await getProductsByShoppingListIdBD(id);
     if (!result) {
       setErrorShoppingLists(true);
       setLoadingShoppingLists(false);
@@ -58,7 +58,7 @@ function ShoppingListProvider({ children }) {
     setLoadingShoppingLists(false);
 
     // setShoppingListSelected({ ...shoppingListSelected, products: result });
-    return shoppingListSelected;
+    return result;
   };
 
   const values = {
