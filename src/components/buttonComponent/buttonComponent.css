@@ -25,6 +25,7 @@
 
     &.cancel{
         border: 1px solid var(--error);
+        color: var(--error)
     }
 
     &.cancel:hover{
