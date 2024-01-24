@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { ShoppingListContext } from '../../../context/shoppingListContext';
+import ButtonComponent from '../../buttonComponent/ButtonComponent';
 import './shoppingListModal.css';
 
 function ShoppingListModal({ closeModal }) {
@@ -41,11 +42,22 @@ function ShoppingListModal({ closeModal }) {
             Nombre
             <input type="text" id="name" name="name" onChange={resetInput} autoFocus />
           </label>
+          <fieldset>
+            <ButtonComponent
+              type="submit"
+              cancel={false}
+              text="Crear"
+              size="large"
+            />
 
-          <input type="submit" className="modal-btn" value="Crear" />
-
-          <input type="button" className="modal-btn cancel" onClick={handleCLose} value="Cancelar" />
-
+            <ButtonComponent
+              type="button"
+              cancel
+              text="Cerrar"
+              size="large"
+              action={handleCLose}
+            />
+          </fieldset>
         </form>
       </article>
     </>

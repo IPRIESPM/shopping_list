@@ -1,10 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import {
+  CarFrontFill, PlusCircle, Trash,
+} from 'react-bootstrap-icons';
 import { ShoppingListContext } from '../../../context/shoppingListContext';
 import LoadingComponent from '../../../components/loadingComponent/LoadingComponent';
 import ErrorComponent from '../../../components/errorComponent/ErrorComponent';
-import './shoppingListDetailsPage.css';
 import ShoppingListProductsComponent from '../../../components/shoppingListComponent/shoppingListProducts/ShoppingListProductsComponent';
+import ButtonComponent from '../../../components/buttonComponent/ButtonComponent';
+import './shoppingListDetailsPage.css';
 
 function ShoppingListDetailsPage() {
   const { id } = useParams();
@@ -40,15 +44,30 @@ function ShoppingListDetailsPage() {
   return (
     <section className="shopping-list-details-page">
       { shoppingListSelected && (
-        <h1>
-          {' '}
-          Ficha de
-          {' '}
-          {shoppingListSelected.name}
-          {' '}
-          <button type="button" onClick={handleDelete}>Eliminar lista</button>
-        </h1>
+        <header>
+          <ButtonComponent
+            type="button"
+            cancel={false}
+            icon={<PlusCircle />}
+            size="small"
+          />
+          <h1>
+            {' '}
+            Ficha de
+            {' '}
+            {shoppingListSelected.name}
+            {' '}
+          </h1>
+          <ButtonComponent
+            type="button"
+            cancel
+            icon={<Trash />}
+            size="small"
+            action={handleDelete}
+          />
+        </header>
       )}
+
       {loadingShoppingLists && <LoadingComponent message="Cargando lista" />}
       {errorShoppingLists && <ErrorComponent message="Error al cargar las lista" />}
       {((!loadingShoppingLists && !errorShoppingLists)
@@ -57,26 +76,32 @@ function ShoppingListDetailsPage() {
       )}
       {((!loadingShoppingLists && !errorShoppingLists)
         && (shoppingListSelected.products.length > 0)) && (
-        <section className="shopping-list-details-aside">
+        <section className="total">
           <hr />
           <p>
-            Peso total:
+            ¿Necesitas
             {' '}
-            {getShoppingListWeight() / 1000}
+            <CarFrontFill />
             {' '}
-            kg
+            ?
+            {' '}
+            <b>
+              {needCar ? 'Si' : 'No'}
+            </b>
           </p>
           <p>
-            ¿Necesitamos coche?
-            {' '}
-            {needCar ? 'Si' : 'No'}
+            Peso total:
+            <b>
+              {getShoppingListWeight() / 1000}
+              kg
+            </b>
           </p>
           <p>
             Precio total:
-            {' '}
-            {getShoppingListPrice()}
-            {' '}
-            €
+            <b>
+              {getShoppingListPrice()}
+              €
+            </b>
           </p>
         </section>
       )}

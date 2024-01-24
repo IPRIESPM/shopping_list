@@ -7,6 +7,7 @@ import ErrorComponent from '../../components/errorComponent/ErrorComponent';
 import { ModalContext } from '../../context/modalContext';
 import ModalComponent from '../../components/modalComponent/ModalComponent';
 import './shoppingListPage.css';
+import ButtonComponent from '../../components/buttonComponent/ButtonComponent';
 
 function ShoppingListPage() {
   // Página para ver las listas de la compra.
@@ -30,12 +31,17 @@ function ShoppingListPage() {
 
   return (
     <section className="shopping-list-page">
-      <nav>
+      <header>
         <h2>Listado de la compra</h2>
-        <button type="button" onClick={handleButton}>
-          Nueva Lista
-          <PlusCircle />
-        </button>
+      </header>
+      <nav>
+        <ButtonComponent
+          type="button"
+          cancel={false}
+          icon={<PlusCircle />}
+          size="large"
+          action={handleButton}
+        />
       </nav>
 
       {modalStatus && <ModalComponent modalTitle="Crear nueva lista" modalType="shoppingList" />}

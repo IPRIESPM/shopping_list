@@ -16,7 +16,7 @@ function HeaderComponent() {
   // Si no esta logueado mostramos el botón de iniciar sesión.
   return (
 
-    <header>
+    <header className="header-component">
       <Link to="/"><h1>Hungry</h1></Link>
       {!user && (
       <Link to="/login">

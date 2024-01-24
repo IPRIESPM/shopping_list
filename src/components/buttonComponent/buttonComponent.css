@@ -1,0 +1,45 @@
+.button-component{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    font-family: var(--font-family);
+
+
+    &.small{
+        font-size: 1.2rem;
+    }
+
+    &.medium{
+        font-size: 1rem;
+        padding: 0.2em 0.4em;
+    }
+
+    &.large{
+        font-size: 1.3rem;
+        padding: 0.8rem 1.4rem;
+    }
+
+    &.cancel{
+        border: 1px solid var(--error);
+    }
+
+    &.cancel:hover{
+        background-color: var(--error);
+        color: var(--font-white);
+        transition: all 0.3s ease-in-out;
+    }
+
+    &.confirm{
+        border: 1px solid var(--confirm);
+    }
+
+    &.confirm:hover{
+        background-color: var(--confirm);
+        color: var(--font-black);
+        transition: all 0.3s ease-in-out;
+    }
+}

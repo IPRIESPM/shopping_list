@@ -42,17 +42,6 @@ section.product-form {
         transition: all 0.1s ease-in-out;
       }
 
-      &[type="submit"] {
-        height: max-content;
-        width: max-content;
-        padding: 15px 22px;
-        transition: all 0.3s ease-in-out;
-
-        &:hover {
-          background-color: transparent;
-          color: var(--yellow);
-        }
-      }
 
       &:invalid {
         border: 1px solid var(--error);

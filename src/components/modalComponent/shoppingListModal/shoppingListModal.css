@@ -1,3 +1,20 @@
-.shopping-list-modal form{
+article.shopping-list-modal form{
+    display: flex;
+    flex-direction: column;
     border: none;
+
+    & label{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    & fieldset{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 1em;
+        width: 100%;
+    }
 }

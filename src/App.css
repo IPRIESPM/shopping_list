@@ -3,6 +3,7 @@
   --font-white: rgba(228 228 228 / 87%);
   --font-black: #242424;
   --error: #dc143cef;
+  --confirm: var(--font-white);
   --font-family: 'Dancing Script', cursive;
 }
 
