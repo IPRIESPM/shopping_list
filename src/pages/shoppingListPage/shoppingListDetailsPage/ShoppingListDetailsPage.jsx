@@ -48,9 +48,10 @@ function ShoppingListDetailsPage() {
         <header>
           <ButtonComponent
             type="button"
-            cancel={false}
-            icon={<PlusCircle />}
+            cancel
+            icon={<Trash />}
             size="small"
+            action={handleDelete}
           />
           <h1>
             {' '}
@@ -59,13 +60,14 @@ function ShoppingListDetailsPage() {
             {shoppingListSelected.name}
             {' '}
           </h1>
+          {' '}
           <ButtonComponent
             type="button"
-            cancel
-            icon={<Trash />}
+            cancel={false}
+            icon={<PlusCircle />}
             size="small"
-            action={handleDelete}
           />
+
         </header>
       )}
 
