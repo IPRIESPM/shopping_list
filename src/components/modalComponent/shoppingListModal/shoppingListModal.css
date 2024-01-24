@@ -1,20 +1,32 @@
-article.shopping-list-modal form{
+article.shopping-list-modal form {
+  display: flex;
+  flex-direction: column;
+  border: none;
+
+  & label {
     display: flex;
     flex-direction: column;
-    border: none;
+    justify-content: flex-start;
+    text-align: left;
+    font-size: small;
+  }
 
-    & label{
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        text-align: left;
+  & fieldset {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1em;
+    width: 100%;
+  }
+
+  & input[type="text"] {
+    text-align: justify;
+    margin-top: 0.5em;
+
+    &:invalid {
+      outline: 1px solid var(--error);
+      border-radius: 4px;
     }
 
-    & fieldset{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        gap: 1em;
-        width: 100%;
-    }
+  }
 }

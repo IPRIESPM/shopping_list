@@ -22,6 +22,7 @@ function ShoppingListDetailsPage() {
     isCarNeeded,
     getShoppingListPrice,
     deleteShoppingList,
+    errorMessage,
   } = useContext(ShoppingListContext);
 
   const shoppingListWeight = getShoppingListWeight();
@@ -69,7 +70,7 @@ function ShoppingListDetailsPage() {
       )}
 
       {loadingShoppingLists && <LoadingComponent message="Cargando lista" />}
-      {errorShoppingLists && <ErrorComponent message="Error al cargar las lista" />}
+      {errorShoppingLists && <ErrorComponent message={errorMessage} />}
       {((!loadingShoppingLists && !errorShoppingLists)
         && (shoppingListSelected.products.length > 0)) && (
         <ShoppingListProductsComponent products={shoppingListSelected.products} />

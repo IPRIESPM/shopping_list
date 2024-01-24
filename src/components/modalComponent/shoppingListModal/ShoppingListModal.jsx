@@ -40,7 +40,14 @@ function ShoppingListModal({ closeModal }) {
         <form onSubmit={handleSubmit}>
           <label htmlFor="name">
             Nombre
-            <input type="text" id="name" name="name" onChange={resetInput} autoFocus />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Nombre"
+              onChange={resetInput}
+              autoFocus
+            />
           </label>
           <fieldset>
             <ButtonComponent

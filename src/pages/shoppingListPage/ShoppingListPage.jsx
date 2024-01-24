@@ -12,7 +12,7 @@ import ButtonComponent from '../../components/buttonComponent/ButtonComponent';
 function ShoppingListPage() {
   // Página para ver las listas de la compra.
   const {
-    getShoppingLists, shoppingLists, loadingShoppingLists, errorShoppingLists,
+    getShoppingLists, shoppingLists, loadingShoppingLists, errorShoppingLists, errorMessage,
   } = useContext(ShoppingListContext);
 
   const { modalStatus, changeModal } = useContext(ModalContext);
@@ -47,7 +47,7 @@ function ShoppingListPage() {
       {modalStatus && <ModalComponent modalTitle="Crear nueva lista" modalType="shoppingList" />}
       {loadingShoppingLists && <LoadingComponent message="Cargando listas" />}
 
-      {errorShoppingLists && <ErrorComponent message="Error al cargar las listas" />}
+      {errorShoppingLists && <ErrorComponent message={errorMessage} />}
 
       {((!loadingShoppingLists && !errorShoppingLists) && shoppingLists) && (
         <ul>

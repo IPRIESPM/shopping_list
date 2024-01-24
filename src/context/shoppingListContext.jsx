@@ -18,6 +18,7 @@ function ShoppingListProvider({ children }) {
   const [shoppingListSelected, setShoppingListSelected] = useState(defaultShoppingListSelected);
   const [loadingShoppingLists, setLoadingShoppingLists] = useState(false);
   const [errorShoppingLists, setErrorShoppingLists] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const getShoppingLists = async () => {
     setLoadingShoppingLists(true);
@@ -123,7 +124,9 @@ function ShoppingListProvider({ children }) {
     const response = await deleteShoppingListDB(id);
 
     if (!response) {
+      setLoadingShoppingLists(false);
       setErrorShoppingLists(true);
+      setErrorMessage('Error al borrar la lista');
       return false;
     }
     console.log(response);
@@ -137,6 +140,7 @@ function ShoppingListProvider({ children }) {
     shoppingListSelected,
     loadingShoppingLists,
     errorShoppingLists,
+    errorMessage,
     createShoppingList,
     deleteShoppingList,
     getShoppingLists,
