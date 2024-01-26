@@ -4,10 +4,12 @@ import {
   CarFrontFill, PlusCircle, Trash,
 } from 'react-bootstrap-icons';
 import { ShoppingListContext } from '../../../context/shoppingListContext';
+import { ModalContext } from '../../../context/modalContext';
 import LoadingComponent from '../../../components/loadingComponent/LoadingComponent';
 import ErrorComponent from '../../../components/errorComponent/ErrorComponent';
 import ShoppingListProductsComponent from '../../../components/shoppingListComponent/shoppingListProducts/ShoppingListProductsComponent';
 import ButtonComponent from '../../../components/buttonComponent/ButtonComponent';
+import ModalComponent from '../../../components/modalComponent/ModalComponent';
 import './shoppingListDetailsPage.css';
 
 function ShoppingListDetailsPage() {
@@ -28,11 +30,17 @@ function ShoppingListDetailsPage() {
   const shoppingListWeight = getShoppingListWeight();
   const needCar = isCarNeeded(shoppingListWeight);
 
+  const { modalStatus, changeModal } = useContext(ModalContext);
+
   const handleDelete = async () => {
     const response = await deleteShoppingList(id);
     if (!response) return false;
     navigate('/shopping_list');
     return true;
+  };
+
+  const handleAdd = () => {
+    changeModal();
   };
 
   useEffect(() => {
@@ -44,6 +52,7 @@ function ShoppingListDetailsPage() {
 
   return (
     <section className="shopping-list-details-page">
+      {modalStatus && <ModalComponent modalTitle="Añadir producto" modalType="productList" />}
       { shoppingListSelected && (
         <header>
           <ButtonComponent
@@ -65,6 +74,7 @@ function ShoppingListDetailsPage() {
             type="button"
             cancel={false}
             icon={<PlusCircle />}
+            action={handleAdd}
             size="small"
           />
 

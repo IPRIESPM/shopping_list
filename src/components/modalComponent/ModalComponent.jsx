@@ -4,6 +4,7 @@ import './modalComponent.css';
 import { ModalContext } from '../../context/modalContext';
 import ProductModal from './productModal/ProductModal';
 import ShoppingListModal from './shoppingListModal/ShoppingListModal';
+import AddProductShoppingList from '../shoppingListComponent/addProductShoppingList/AddProductShoppingList';
 
 function ModalComponent({ modalTitle, modalType = 'product' }) {
   // Nostraemos el contexto del modal.
@@ -33,6 +34,10 @@ function ModalComponent({ modalTitle, modalType = 'product' }) {
 
         {modalType === 'shoppingList' && (
           <ShoppingListModal closeModal={closeModal} />
+        )}
+
+        {modalType === 'productList' && (
+          <AddProductShoppingList closeModal={closeModal} />
         )}
       </div>
     </section>

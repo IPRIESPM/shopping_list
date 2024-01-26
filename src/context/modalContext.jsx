@@ -9,6 +9,7 @@ function ModalProvider({ children }) {
   // Un contexto para mostrar un modal.
 
   const [modalStatus, setActive] = useState(null);
+
   // Función switch para cambiar el estado del modal.
   const changeModal = () => {
     setActive(!modalStatus);
