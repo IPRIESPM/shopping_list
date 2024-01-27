@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  CarFrontFill, PlusCircle, Trash,
+  CarFrontFill, PencilSquare, Trash,
 } from 'react-bootstrap-icons';
 import { ShoppingListContext } from '../../../context/shoppingListContext';
 import { ModalContext } from '../../../context/modalContext';
@@ -73,7 +73,7 @@ function ShoppingListDetailsPage() {
           <ButtonComponent
             type="button"
             cancel={false}
-            icon={<PlusCircle />}
+            icon={<PencilSquare />}
             action={handleAdd}
             size="small"
           />

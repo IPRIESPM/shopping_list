@@ -7,7 +7,7 @@ import ErrorComponent from '../../components/errorComponent/ErrorComponent';
 import { ModalContext } from '../../context/modalContext';
 import ModalComponent from '../../components/modalComponent/ModalComponent';
 import ButtonComponent from '../../components/buttonComponent/ButtonComponent';
-import './ShoppingListPage.css';
+import './shoppingListPage.css';
 
 function ShoppingListPage() {
   // Página para ver las listas de la compra.

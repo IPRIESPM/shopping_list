@@ -103,7 +103,7 @@ function ShoppingListProvider({ children }) {
       price += product.amount * product.product.price;
     });
 
-    return price;
+    return Math.round(price * 100) / 100;
   };
 
   const isCarNeeded = (weight) => {

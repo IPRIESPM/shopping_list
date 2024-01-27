@@ -18,5 +18,38 @@ section.add-product-shopping-list{
             font-size: 1.5rem;
             color: var(--yellow);
         }
+
+        & .product-list{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 100%;
+
+            & hr{
+                width: 100%;
+                border: 0.5px solid var(--yellow);
+            }
+
+            & .title{
+                font-family: var(--font-family);
+                font-size: 1.5rem;
+                color: var(--yellow);
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+
+            & button{
+                cursor: copy;
+            }
+        }
+
+        & .as{
+            flex-direction: column-reverse;
+
+            & button{
+                cursor: not-allowed;
+            }
+        }
     }
 }

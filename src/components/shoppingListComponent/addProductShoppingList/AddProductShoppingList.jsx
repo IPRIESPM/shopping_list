@@ -34,7 +34,7 @@ function AddProductShoppingList({ closeModal }) {
   };
 
   useEffect(() => {
-    document.title = 'Añadir producto a la lista - Hungry';
+    document.title = 'Modificar lista - Hungry';
     if (products.length === 0) getProducts();
     return () => {
       document.title = 'Hungry';
@@ -45,39 +45,44 @@ function AddProductShoppingList({ closeModal }) {
     <section className="add-product-shopping-list">
       <h1>
         {' '}
-        Añadir producto a
+        Modificando la lista
         {' '}
         {shoppingListSelected.name}
       </h1>
       <section className="body">
 
         <section className="product-list">
+          <p className="title">Crear o añadir cantidad</p>
+          <hr />
           {
-          products.map((product) => (
-            <button
-              type="button"
-              key={`${product.id}-product`}
-              className={productExist(product.id) ? 'disabled' : ''}
-              onClick={() => handleAddProduct(product)}
-            >
-              <ProductComponent product={product} />
-            </button>
-          ))
-        }
+            products.map((product) => (
+              <button
+                type="button"
+                key={`${product.id}-product`}
+                className={productExist(product.id) ? 'disabled' : ''}
+                onClick={() => handleAddProduct(product)}
+              >
+                <ProductComponent product={product} />
+              </button>
+            ))
+          }
         </section>
-        {shoppingListSelected.products.length === 0 && (
-        <section className="product-list as">
-          <p className="info">No hay productos en la lista</p>
-        </section>
-        )}
-        <section className="product-list as">
-          {
-          shoppingListSelected.products.map((product) => (
-            <button type="button" key={`${product.product.id}-list`} onClick={() => handleDelete(product)}>
-              <ProductComponent product={product.product} amount={product.amount} />
-            </button>
-          ))
-        }
+
+        <section className="product-list">
+          <p className="title">Eliminar producto o cantidad</p>
+          <hr />
+          {shoppingListSelected.products.length === 0 && (
+            <p className="info">No hay productos en la lista</p>
+          )}
+          <section className="as">
+            {
+              shoppingListSelected.products.map((product) => (
+                <button type="button" key={`${product.product.id}-list`} onClick={() => handleDelete(product)}>
+                  <ProductComponent product={product.product} amount={product.amount} />
+                </button>
+              ))
+            }
+          </section>
         </section>
       </section>
       <ButtonComponent type="button" cancel text="Cerrar" action={closeModal} size="large" />
