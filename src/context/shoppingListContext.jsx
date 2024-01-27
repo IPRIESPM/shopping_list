@@ -3,8 +3,14 @@
 
 import React, { createContext, useState } from 'react';
 import {
-  getShoppingListByIDB, getShoppingListsDb, getProductsByShoppingListIdBD, createShoppingListDB,
+  getShoppingListByIDB,
+  getShoppingListsDb,
+  getProductsByShoppingListIdBD,
+  createShoppingListDB,
   deleteShoppingListDB,
+  addProductToShoppingListDB,
+  updateProductAmountDB,
+  deleteProductFromShoppingListDB,
 } from '../controller/shoppingLists';
 
 const ShoppingListContext = createContext();
@@ -15,7 +21,9 @@ function ShoppingListProvider({ children }) {
     products: [],
   };
   const [shoppingLists, setShoppingLists] = useState(defaultShoppingLists);
-  const [shoppingListSelected, setShoppingListSelected] = useState(defaultShoppingListSelected);
+  const [shoppingListSelected, setShoppingListSelected] = useState(
+    defaultShoppingListSelected,
+  );
   const [loadingShoppingLists, setLoadingShoppingLists] = useState(false);
   const [errorShoppingLists, setErrorShoppingLists] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -134,6 +142,104 @@ function ShoppingListProvider({ children }) {
     setLoadingShoppingLists(false);
     return response;
   };
+  const productExist = (id) => {
+    const product = shoppingListSelected.products.find(
+      (pro) => pro.product.id === id,
+    );
+    return product;
+  };
+
+  const addProductShoppingList = async (product) => {
+    const exist = productExist(product.id);
+    if (!exist) {
+      const newProduct = {
+        ...product,
+        amount: 1,
+      };
+      setLoadingShoppingLists(true);
+      const result = await addProductToShoppingListDB(
+        shoppingListSelected.id,
+        newProduct,
+      );
+      if (result) {
+        await getProductsByShoppingListID(shoppingListSelected.id);
+        setLoadingShoppingLists(false);
+      } else {
+        setLoadingShoppingLists(false);
+        setErrorShoppingLists(true);
+        setErrorMessage('Error al añadir el producto');
+      }
+      setLoadingShoppingLists(false);
+    }
+  };
+
+  const updateProductShoppingList = async (product) => {
+    const exist = productExist(product.id);
+    if (exist) {
+      const newProduct = {
+        ...product,
+        amount: exist.amount + 1,
+      };
+      setLoadingShoppingLists(true);
+      const result = await updateProductAmountDB(
+        shoppingListSelected.id,
+        newProduct,
+      );
+      if (result) {
+        await getProductsByShoppingListID(shoppingListSelected.id);
+        setLoadingShoppingLists(false);
+      } else {
+        setLoadingShoppingLists(false);
+        setErrorShoppingLists(true);
+        setErrorMessage('Error al añadir el producto');
+      }
+      setLoadingShoppingLists(false);
+    }
+  };
+
+  const deleteProductShoppingList = async (product) => {
+    const exist = productExist(product.id);
+    if (exist) {
+      const newProduct = {
+        ...product,
+        amount: exist.amount - 1,
+      };
+      // comprobamos si el producto tiene 0 unidades
+      // si es así, lo borramos de la lista, si no lo actualizamos
+
+      if (newProduct.amount <= 0) {
+        setLoadingShoppingLists(true);
+        const result = await deleteProductFromShoppingListDB(
+          shoppingListSelected.id,
+          newProduct.id,
+        );
+        if (result) {
+          await getProductsByShoppingListID(shoppingListSelected.id);
+          setLoadingShoppingLists(false);
+        } else {
+          setLoadingShoppingLists(false);
+          setErrorShoppingLists(true);
+          setErrorMessage('Error al borrar el producto');
+        }
+        setLoadingShoppingLists(false);
+      } else {
+        setLoadingShoppingLists(true);
+        const result = await updateProductAmountDB(
+          shoppingListSelected.id,
+          newProduct,
+        );
+        if (result) {
+          await getProductsByShoppingListID(shoppingListSelected.id);
+          setLoadingShoppingLists(false);
+        } else {
+          setLoadingShoppingLists(false);
+          setErrorShoppingLists(true);
+          setErrorMessage('Error al borrar el producto');
+        }
+        setLoadingShoppingLists(false);
+      }
+    }
+  };
 
   const values = {
     shoppingLists,
@@ -141,6 +247,9 @@ function ShoppingListProvider({ children }) {
     loadingShoppingLists,
     errorShoppingLists,
     errorMessage,
+    addProductShoppingList,
+    updateProductShoppingList,
+    deleteProductShoppingList,
     createShoppingList,
     deleteShoppingList,
     getShoppingLists,
@@ -150,7 +259,6 @@ function ShoppingListProvider({ children }) {
     getShoppingListWeight,
     getShoppingListPrice,
     isCarNeeded,
-
   };
 
   /*

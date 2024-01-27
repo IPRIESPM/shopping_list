@@ -13,7 +13,7 @@ function ProductComponent({ product, amount }) {
     updatedName = 'No image';
   }
   return (
-    <section className="product">
+    <section className="product ">
       <img src={updatedImage} alt={updatedName} width="35.93px" height="32px" />
       <p>
         {product.name}

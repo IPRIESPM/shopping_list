@@ -1,0 +1,22 @@
+section.add-product-shopping-list{
+    display: flex;
+
+    section.body{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+
+        & .disabled{
+            opacity: 0.5;
+        }
+
+        & .info{
+            font-family: var(--font-family);
+            font-size: 1.5rem;
+            color: var(--yellow);
+        }
+    }
+}

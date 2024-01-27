@@ -82,10 +82,67 @@ const deleteShoppingListDB = async (id) => {
 
   return data;
 };
+
+const addProductToShoppingListDB = async (shoppingListId, productDetails) => {
+  const { amount, id } = productDetails;
+
+  const { data, error } = await supabaseConnection
+    .from('shopping_list_product')
+    .insert([
+      {
+        shopping_list_id: shoppingListId,
+        product_id: id,
+        amount,
+      },
+    ])
+    .select();
+
+  if (error) {
+    return false;
+  }
+
+  return data;
+};
+
+const updateProductAmountDB = async (shoppingListId, productDetails) => {
+  const { amount, id } = productDetails;
+
+  const { data, error } = await supabaseConnection
+    .from('shopping_list_product')
+    .update({ amount })
+    .eq('shopping_list_id', shoppingListId)
+    .eq('product_id', id)
+    .select();
+
+  if (error) {
+    return false;
+  }
+
+  return data;
+};
+
+const deleteProductFromShoppingListDB = async (shoppingListId, productId) => {
+  const { data, error } = await supabaseConnection
+    .from('shopping_list_product')
+    .delete()
+    .eq('shopping_list_id', shoppingListId)
+    .eq('product_id', productId)
+    .select();
+
+  if (error) {
+    return false;
+  }
+
+  return data;
+};
+
 export {
   getShoppingListsDb,
   getShoppingListByIDB,
   getProductsByShoppingListIdBD,
   createShoppingListDB,
   deleteShoppingListDB,
+  addProductToShoppingListDB,
+  updateProductAmountDB,
+  deleteProductFromShoppingListDB,
 };
