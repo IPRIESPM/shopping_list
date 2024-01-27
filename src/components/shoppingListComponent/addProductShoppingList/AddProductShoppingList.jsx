@@ -17,12 +17,16 @@ function AddProductShoppingList({ closeModal }) {
     deleteProductShoppingList,
   } = useContext(ShoppingListContext);
 
+  // Comprobamos si el producto ya está en la lista.
   const productExist = (id) => {
     const product = shoppingListSelected.products.find((pro) => pro.product.id === id);
     return product !== undefined;
   };
 
+  // Añadimos el producto a la lista.
   const handleAddProduct = (product) => {
+    // Si el producto ya está en la lista, lo actualizamos.
+    // Si no, lo añadimos.
     if (productExist(product.id)) {
       updateProductShoppingList(product);
     } else {
@@ -30,10 +34,14 @@ function AddProductShoppingList({ closeModal }) {
     }
   };
 
+  // Eliminamos el producto de la lista.
   const handleDelete = (product) => {
     deleteProductShoppingList(product.product, true);
   };
 
+  // Cuando se monte el componente,
+  // cambiamos el título de la página y traemos los productos,
+  // si no los tenemos ya.
   useEffect(() => {
     document.title = 'Modificar lista - Hungry';
     if (products.length === 0) getProducts();

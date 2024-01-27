@@ -13,7 +13,11 @@ import ModalComponent from '../../../components/modalComponent/ModalComponent';
 import './shoppingListDetailsPage.css';
 
 function ShoppingListDetailsPage() {
+  //  Página para ver los detalles de una lista de la compra.
+
+  // Obtenemos el id de la lista de la compra de la url.
   const { id } = useParams();
+  // Nos traemos el estado del modal y la función para cambiarlo.
   const navigate = useNavigate();
   const {
     getShoppingListByID,
@@ -27,22 +31,32 @@ function ShoppingListDetailsPage() {
     errorMessage,
   } = useContext(ShoppingListContext);
 
+  // Obtenemos el peso de la lista de la compra.
   const shoppingListWeight = getShoppingListWeight();
+  // Comprobamos si necesitamos coche para transportar la lista de la compra.
+  // Si el peso es mayor de 10kg, necesitamos coche.
   const needCar = isCarNeeded(shoppingListWeight);
 
+  // Nos traemos el estado del modal y la función para cambiarlo.
   const { modalStatus, changeModal } = useContext(ModalContext);
 
+  // Función encargada de eliminar la lista de la compra.
   const handleDelete = async () => {
+    // Eliminamos la lista de la compra.
     const response = await deleteShoppingList(id);
-    if (!response) return false;
-    navigate('/shopping_list');
-    return true;
+    // Si no se ha podido eliminar, devolvemos false.
+    // Si se ha podido eliminar, redirigimos a la página de listas de la compra.
+    if (response) navigate('/shopping_list');
   };
 
+  // Función para cambiar el estado del modal.
   const handleAdd = () => {
     changeModal();
   };
 
+  // Cuando se monte el componente,
+  // cambiamos el título de la página y traemos la lista de la compra.
+  // Además, si no hay id, redirigimos a la página de listas de la compra.
   useEffect(() => {
     if (!id) navigate('/shopping_list');
     (async () => {

@@ -44,13 +44,11 @@ const getProductsByShoppingListIdBD = async (id) => {
       .eq('shopping_list_id', id);
 
     if (error) {
-      console.log(error);
       return false;
     }
 
     return data;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -63,7 +61,6 @@ const createShoppingListDB = async (name) => {
     .select();
 
   if (error) {
-    console.log(error);
     return false;
   }
 

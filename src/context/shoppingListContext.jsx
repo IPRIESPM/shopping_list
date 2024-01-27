@@ -28,6 +28,7 @@ function ShoppingListProvider({ children }) {
   const [errorShoppingLists, setErrorShoppingLists] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Funcion para obtener las listas de la compra de la base de datos.
   const getShoppingLists = async () => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
@@ -45,6 +46,7 @@ function ShoppingListProvider({ children }) {
     return response;
   };
 
+  // Funciones para Obtener los productos de una lista de la compra de la base de datos.
   const getProductsByShoppingListID = async (id) => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
@@ -61,6 +63,7 @@ function ShoppingListProvider({ children }) {
     return result;
   };
 
+  // Funcion para obtener una lista de la compra de la base de datos.
   const getShoppingListByID = async (id) => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
@@ -84,6 +87,7 @@ function ShoppingListProvider({ children }) {
     return listDataWithProducts;
   };
 
+  // Funcion para obtener el peso de una lista de la compra.
   const getShoppingListWeight = () => {
     let weight = 0;
     if (!shoppingListSelected || !shoppingListSelected.products) return weight;
@@ -95,6 +99,7 @@ function ShoppingListProvider({ children }) {
     return weight;
   };
 
+  // Funcion para obtener el precio de una lista de la compra.
   const getShoppingListPrice = () => {
     let price = 0;
     if (!shoppingListSelected || !shoppingListSelected.products) return price;
@@ -106,6 +111,7 @@ function ShoppingListProvider({ children }) {
     return Math.round(price * 100) / 100;
   };
 
+  // Funcion para comprobar si necesitamos coche para transportar la lista de la compra.
   const isCarNeeded = (weight) => {
     const weightLimit = 10000;
 
@@ -114,6 +120,7 @@ function ShoppingListProvider({ children }) {
     return false;
   };
 
+  // Funcion para crear una lista de la compra.
   const createShoppingList = async (name) => {
     setLoadingShoppingLists(true);
     const response = await createShoppingListDB(name);
@@ -127,6 +134,7 @@ function ShoppingListProvider({ children }) {
     return response;
   };
 
+  // Funcion para borrar una lista de la compra.
   const deleteShoppingList = async (id) => {
     setLoadingShoppingLists(true);
     const response = await deleteShoppingListDB(id);
@@ -137,11 +145,11 @@ function ShoppingListProvider({ children }) {
       setErrorMessage('Error al borrar la lista');
       return false;
     }
-    console.log(response);
-    // setShoppingLists([...shoppingLists, response[0]]);
     setLoadingShoppingLists(false);
     return response;
   };
+
+  // Funcion para comprobar si un producto ya existe en la lista de la compra.
   const productExist = (id) => {
     const product = shoppingListSelected.products.find(
       (pro) => pro.product.id === id,
@@ -149,6 +157,7 @@ function ShoppingListProvider({ children }) {
     return product;
   };
 
+  // Función para añadir un producto a la lista de la compra.
   const addProductShoppingList = async (product) => {
     const exist = productExist(product.id);
     if (!exist) {
@@ -173,6 +182,7 @@ function ShoppingListProvider({ children }) {
     }
   };
 
+  // Función para actualizar un producto de la lista de la compra.
   const updateProductShoppingList = async (product) => {
     const exist = productExist(product.id);
     if (exist) {
@@ -196,7 +206,7 @@ function ShoppingListProvider({ children }) {
       setLoadingShoppingLists(false);
     }
   };
-
+  // Función para borrar un producto de la lista de la compra.
   const deleteProductShoppingList = async (product) => {
     const exist = productExist(product.id);
     if (exist) {
@@ -204,6 +214,7 @@ function ShoppingListProvider({ children }) {
         ...product,
         amount: exist.amount - 1,
       };
+
       // comprobamos si el producto tiene 0 unidades
       // si es así, lo borramos de la lista, si no lo actualizamos
 

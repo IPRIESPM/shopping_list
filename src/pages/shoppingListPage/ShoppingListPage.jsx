@@ -15,12 +15,16 @@ function ShoppingListPage() {
     getShoppingLists, shoppingLists, loadingShoppingLists, errorShoppingLists, errorMessage,
   } = useContext(ShoppingListContext);
 
+  // Nos traemos el estado del modal y la función para cambiarlo.
   const { modalStatus, changeModal } = useContext(ModalContext);
 
+  // Función para cambiar el estado del modal.
   const handleButton = () => {
     changeModal();
   };
 
+  // Cuando se monte el componente,
+  // cambiamos el título de la página y traemos las listas de la compra.
   useEffect(() => {
     document.title = 'Listas de la compra - Hungry';
     getShoppingLists();
