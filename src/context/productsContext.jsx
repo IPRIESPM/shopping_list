@@ -164,8 +164,7 @@ function ProductsProvider({ children }) {
       return false;
     }
 
-    const newProducts = [...products];
-    newProducts.push(result[0]);
+    const newProducts = [result[0], ...products];
     setSelectedProduct(result[0]);
     setProduct(newProducts);
     setLoading(false);

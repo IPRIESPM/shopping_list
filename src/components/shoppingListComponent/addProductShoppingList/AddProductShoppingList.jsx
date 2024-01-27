@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect } from 'react';
+import { PlusCircle, Trash } from 'react-bootstrap-icons';
 import { ProductsContext } from '../../../context/productsContext';
 import ProductComponent from '../../products/productComponent/ProductComponent';
 import ButtonComponent from '../../buttonComponent/ButtonComponent';
@@ -56,14 +57,11 @@ function AddProductShoppingList({ closeModal }) {
           <hr />
           {
             products.map((product) => (
-              <button
-                type="button"
-                key={`${product.id}-product`}
-                className={productExist(product.id) ? 'disabled' : ''}
-                onClick={() => handleAddProduct(product)}
-              >
+              <div className={`product ${productExist(product.id) ? 'disabled' : ''}`}>
+
+                <ButtonComponent type="button" icon={<PlusCircle />} action={() => handleAddProduct(product)} />
                 <ProductComponent product={product} />
-              </button>
+              </div>
             ))
           }
         </section>
@@ -77,9 +75,11 @@ function AddProductShoppingList({ closeModal }) {
           <section className="as">
             {
               shoppingListSelected.products.map((product) => (
-                <button type="button" key={`${product.product.id}-list`} onClick={() => handleDelete(product)}>
+                <div className="product" key={`${product.product.id}-list`}>
+
                   <ProductComponent product={product.product} amount={product.amount} />
-                </button>
+                  <ButtonComponent type="button" icon={<Trash />} action={() => { handleDelete(product); }} />
+                </div>
               ))
             }
           </section>
