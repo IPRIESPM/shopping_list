@@ -1,25 +1,20 @@
-import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import React, { useContext } from 'react';
+import {
+  Routes, Route, Outlet, Navigate,
+} from 'react-router-dom';
 import HomePage from '../../pages/homePage/HomePage';
 import LoginPage from '../../pages/loginPage/LoginPage';
 import ProductPage from '../../pages/productPage/ProductPage';
 import ProductDetailPage from '../../pages/productPage/productDetailsPage/ProductDetailPage';
 import ShoppingListPage from '../../pages/shoppingListPage/ShoppingListPage';
 import ShoppingListDetailsPage from '../../pages/shoppingListPage/shoppingListDetailsPage/ShoppingListDetailsPage';
+import { UserContext } from '../../context/userContext';
 
 function RouterComponent() {
-  /*
-    Para el manejo de rutas, listamos todas las rutas
-    y las dejamos disponibles para futuras ampliaciones.
+  const { user } = useContext(UserContext);
 
-    En el caso de productos y listas de la compra, usamos
-    el componente Outlet para poder tener una ruta padre
-    y poder usarla para mostrar la lista de productos o
-    la lista de la compra, y luego poder mostrar el detalle
-    de cada uno de ellos.
-
-    se queda preparado para futuras versiones.
-  */
+  // Verifica si el usuario está autenticado
+  const isAuthenticated = !!user; // Asumiendo que tu userContext tiene información de autenticación
 
   return (
     <Routes>
@@ -28,11 +23,27 @@ function RouterComponent() {
         <Route index element={<LoginPage />} />
         <Route path=":register" element={<LoginPage />} />
       </Route>
-      <Route path="/products" element={<Outlet />}>
+      <Route
+        path="/products"
+        element={
+          isAuthenticated ? (
+            <Outlet />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      >
         <Route index element={<ProductPage />} />
         <Route path=":id" element={<ProductDetailPage />} />
       </Route>
-      <Route path="/shopping_list" element={<Outlet />}>
+      <Route
+        path="/shopping_list"
+        element={isAuthenticated ? (
+          <Outlet />
+        ) : (
+          <Navigate to="/login" />
+        )}
+      >
         <Route index element={<ShoppingListPage />} />
         <Route path=":id" element={<ShoppingListDetailsPage />} />
       </Route>
