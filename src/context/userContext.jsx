@@ -10,7 +10,7 @@ import supabaseConnection from '../config/supabase';
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     supabaseConnection.auth.onAuthStateChange((event, session) => {
@@ -18,6 +18,8 @@ function UserProvider({ children }) {
         setUser(session.user);
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
+      } else if (event === 'INITIAL_SESSION') {
+        if (session) setUser(session.user);
       }
     });
   }, []);

@@ -1,10 +1,11 @@
 import supabaseConnection from '../config/supabase';
 
-const getShoppingListsDb = async () => {
+const getShoppingListsDb = async (userId) => {
   try {
     const { data, error } = await supabaseConnection
       .from('shopping_list')
-      .select('*');
+      .select('*')
+      .eq('user', userId);
 
     if (error) {
       return false;
@@ -52,12 +53,12 @@ const getProductsByShoppingListIdBD = async (id) => {
     return false;
   }
 };
-const createShoppingListDB = async (name) => {
+const createShoppingListDB = async (name, user) => {
   const { data, error } = await supabaseConnection
     .from('shopping_list')
-    .insert([
-      { name },
-    ])
+    .insert(
+      [{ name, user }],
+    )
     .select();
 
   if (error) {

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Basket, JournalText } from 'react-bootstrap-icons';
+import { UserContext } from '../../context/userContext';
 import './navComponent.css';
 
 function NavComponent() {
-  return (
+  const { user } = useContext(UserContext);
+  return user && (
     // Un componente que muestra un menú de navegación.
     // con dos enlaces a las rutas de productos y listas de la compra.
     <nav className="active">

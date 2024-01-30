@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/prop-types */
 
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import {
   getShoppingListByIDB,
   getShoppingListsDb,
@@ -12,10 +12,12 @@ import {
   updateProductAmountDB,
   deleteProductFromShoppingListDB,
 } from '../controller/shoppingLists';
+import { UserContext } from './userContext';
 
 const ShoppingListContext = createContext();
 
 function ShoppingListProvider({ children }) {
+  const { user } = useContext(UserContext);
   const defaultShoppingLists = [];
   const defaultShoppingListSelected = {
     products: [],
@@ -32,7 +34,7 @@ function ShoppingListProvider({ children }) {
   const getShoppingLists = async () => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
-    const response = await getShoppingListsDb();
+    const response = await getShoppingListsDb(user.id);
 
     if (!response) {
       setShoppingLists(defaultShoppingLists);
@@ -123,7 +125,7 @@ function ShoppingListProvider({ children }) {
   // Funcion para crear una lista de la compra.
   const createShoppingList = async (name) => {
     setLoadingShoppingLists(true);
-    const response = await createShoppingListDB(name);
+    const response = await createShoppingListDB(name, user.id);
 
     if (!response) {
       setErrorShoppingLists(true);
