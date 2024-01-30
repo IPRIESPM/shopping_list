@@ -24,7 +24,10 @@ function RouterComponent() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<Outlet />}>
+        <Route index element={<LoginPage />} />
+        <Route path=":register" element={<LoginPage />} />
+      </Route>
       <Route path="/products" element={<Outlet />}>
         <Route index element={<ProductPage />} />
         <Route path=":id" element={<ProductDetailPage />} />

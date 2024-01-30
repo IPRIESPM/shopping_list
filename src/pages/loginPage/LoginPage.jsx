@@ -4,16 +4,18 @@ import React, {
 } from 'react';
 import { EnvelopeAtFill, PersonFillLock } from 'react-bootstrap-icons';
 import './loginPage.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
 import ErrorComponent from '../../components/errorComponent/ErrorComponent';
 import LoadingComponent from '../../components/loadingComponent/LoadingComponent';
 
 function LoginPage() {
   // Preparamos los estados
-  const { user, logIn } = useContext(UserContext);
+  const { user, logIn, registerUser } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
+  const [register, setRegister] = useState(false);
+  const registerParam = useParams();
 
   /*
     hook de navegación de react-router-dom que nos permite
@@ -30,7 +32,7 @@ function LoginPage() {
     no hacemos nada.
   */
   useEffect(() => {
-    if (user && !loading && !errorLogin) {
+    if (user && !loading && !errorLogin && !register) {
       navigate('/products');
     }
   }, [user]);
@@ -52,13 +54,14 @@ function LoginPage() {
     event.preventDefault();
     setErrorLogin(false);
     setLoading(true);
-
+    let result = false;
     /*
       obtenemos los datos del formulario y los convertimos
       en un objeto para poder trabajar con ellos.
     */
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
+
     /*
       Validamos los datos del formulario, si no son correctos
       mostramos un error y salimos de la función.
@@ -75,7 +78,13 @@ function LoginPage() {
     */
     data.email = data.email.trim();
     data.password = data.password.trim();
-    const result = await logIn(data);
+
+    if (!register) {
+      result = await logIn(data);
+    } else {
+      console.log('register');
+      result = await registerUser(data);
+    }
 
     /*
       Si el resultado es falso, mostramos un error y salimos
@@ -98,7 +107,12 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    document.title = 'Iniciar sesión - Hungry';
+    if (registerParam.register === 'register') {
+      setRegister(true);
+      document.title = 'Registrarse - Hungry';
+    } else {
+      document.title = 'Iniciar sesión - Hungry';
+    }
 
     return () => {
       document.title = 'Hungry';
@@ -107,10 +121,11 @@ function LoginPage() {
 
   return (
     <section className="loginPage">
-      <h1>Iniciar sesión</h1>
+      {!register && <h1>Iniciar sesión</h1>}
+      {register && <h1>Registrarse</h1>}
 
       {!user && !loading && (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} name={register ? 'register' : 'login'}>
           <fieldset>
 
             <label htmlFor="email">
@@ -123,30 +138,48 @@ function LoginPage() {
               <input type="password" id="password" name="password" placeholder="contraseña" />
             </label>
           </fieldset>
-          <input type="submit" value="Acceder" />
+          <input type="submit" value={register ? 'Registrarse' : 'Iniciar Sesión'} />
+
+          {!register && (
+            <Link to="/login/register" onClick={() => setRegister(true)}>Registrarse</Link>
+          )}
+
+          {register && (
+            <Link to="/login" onClick={() => setRegister(false)}>Iniciar sesión</Link>
+          )}
         </form>
       )}
 
-      {loading && (
+      {(loading && !register) && (
         <LoadingComponent message="Iniciando sesión" />
       )}
 
-      {errorLogin && (
+      {(loading && register) && (
+        <LoadingComponent message="Te estamos registrando, espera un segundo" />
+      )}
+
+      {(errorLogin && !register) && (
         <ErrorComponent message="Error al iniciar sesión" />
+      )}
+
+      {(errorLogin && register) && (
+        <ErrorComponent message="Error al registrarse" />
       )}
 
       {user && !errorLogin && (
         <section className="login-success">
-          <p>Inicio correcto</p>
+          <p>Te has registrado en nuestra app</p>
           <Link to="/products">Ver productos</Link>
         </section>
       )}
+      {!register && (
+        <ul className="test-data">
+          Datos de prueba:
+          <li>Usuario: isaacjulianpavon.alu@iespacomolla.es</li>
+          <li>Contraseña: test</li>
+        </ul>
+      )}
 
-      <ul className="test-data">
-        Datos de prueba:
-        <li>Usuario: isaacjulianpavon.alu@iespacomolla.es</li>
-        <li>Contraseña: test</li>
-      </ul>
     </section>
   );
 }

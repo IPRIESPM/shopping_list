@@ -1,32 +1,34 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/prop-types */
 
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import {
-  checkUserIsLogged, getUserDB, loginUserDB, logoutUserDB,
+  getUserDB, loginUserDB, logoutUserDB, registerUserDB,
 } from '../controller/user';
+import supabaseConnection from '../config/supabase';
 
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-  /*
-    Establecemos el estado inicial del usuario,
-    en este caso, no he conseguido darle un nombre,
-    desde el modulo auth de supabase, el usuario
-    tiene una tabla llamada users y en ella tiene
-    un campo llamado nickname, que es el que vamos
-    a usar para identificar al usuario.
-
-    Pero se queda preparado para futuras versiones.
-  */
   const [user, setUser] = useState(null);
-  // const [nickname, setNickname] = useState('');
 
-  const checkUserLoggedLocal = async () => {
-    const userSession = await checkUserIsLogged();
-    if (!user && userSession) {
-      setUser(userSession);
+  useEffect(() => {
+    supabaseConnection.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        setUser(session.user);
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  const registerUser = async (userData) => {
+    const result = await registerUserDB(userData);
+
+    if (!result) {
+      return false;
     }
+    return result;
   };
 
   /*
@@ -44,8 +46,6 @@ function UserProvider({ children }) {
     if (!result) {
       return false;
     }
-
-    setUser(result);
     return result;
   };
 
@@ -64,7 +64,6 @@ function UserProvider({ children }) {
     if (!result) {
       return false;
     }
-    setUser(null);
     return true;
   };
 
@@ -83,8 +82,6 @@ function UserProvider({ children }) {
     if (!result) {
       return false;
     }
-
-    setUser(result);
     return result;
   };
 
@@ -97,8 +94,8 @@ function UserProvider({ children }) {
     user,
     logOut,
     logIn,
+    registerUser,
     getUser,
-    checkUserLoggedLocal,
   };
 
   /*
