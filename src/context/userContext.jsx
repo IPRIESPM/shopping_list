@@ -28,10 +28,6 @@ function UserProvider({ children }) {
 
   const registerUser = async (userData) => {
     const result = await registerUserDB(userData);
-
-    if (!result) {
-      return false;
-    }
     return result;
   };
 
@@ -46,10 +42,6 @@ function UserProvider({ children }) {
   */
   const logIn = async (userData) => {
     const result = await loginUserDB(userData);
-
-    if (!result) {
-      return false;
-    }
     return result;
   };
 
@@ -64,11 +56,7 @@ function UserProvider({ children }) {
   */
   const logOut = async () => {
     const result = await logoutUserDB();
-
-    if (!result) {
-      return false;
-    }
-    return true;
+    return result;
   };
 
   /*
@@ -83,9 +71,6 @@ function UserProvider({ children }) {
   const getUser = async () => {
     const result = await getUserDB();
 
-    if (!result) {
-      return false;
-    }
     return result;
   };
 
