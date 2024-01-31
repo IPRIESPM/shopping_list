@@ -82,7 +82,6 @@ function LoginPage() {
     if (!register) {
       result = await logIn(data);
     } else {
-      console.log('register');
       result = await registerUser(data);
     }
 
