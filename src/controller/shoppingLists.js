@@ -5,7 +5,7 @@ const getShoppingListsDb = async (userId) => {
     const { data, error } = await supabaseConnection
       .from('shopping_list')
       .select('*')
-      .eq('user', userId);
+      .eq('user_id', userId);
 
     if (error) {
       return false;
