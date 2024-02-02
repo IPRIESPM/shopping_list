@@ -10,8 +10,11 @@ import supabaseConnection from '../config/supabase';
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
+  // Utilizamos el hook useEffect para comprobar si el usuario está logueado
+  // consumiendo el método onAuthStateChange de supabase, que se ejecuta
+  // en tiempo real cada vez que cambia el estado de autenticación.
   useEffect(() => {
     supabaseConnection.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
@@ -19,17 +22,16 @@ function UserProvider({ children }) {
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
       } else if (event === 'INITIAL_SESSION') {
-        if (session) setUser(session.user);
+        if (session) {
+          setUser(session.user);
+        }
       }
     });
   }, []);
 
+  // Función asíncrona para registrar un usuario
   const registerUser = async (userData) => {
     const result = await registerUserDB(userData);
-
-    if (!result) {
-      return false;
-    }
     return result;
   };
 
@@ -44,16 +46,12 @@ function UserProvider({ children }) {
   */
   const logIn = async (userData) => {
     const result = await loginUserDB(userData);
-
-    if (!result) {
-      return false;
-    }
     return result;
   };
 
   /*
     Función asíncrona para cerrar sesión en
-    supabase, simplemente llama a la función
+    supabase, llama a la función
     signOut del modulo auth de supabase.
 
     De momento no guardamos el token en local
@@ -62,11 +60,7 @@ function UserProvider({ children }) {
   */
   const logOut = async () => {
     const result = await logoutUserDB();
-
-    if (!result) {
-      return false;
-    }
-    return true;
+    return result;
   };
 
   /*
@@ -80,10 +74,6 @@ function UserProvider({ children }) {
 
   const getUser = async () => {
     const result = await getUserDB();
-
-    if (!result) {
-      return false;
-    }
     return result;
   };
 

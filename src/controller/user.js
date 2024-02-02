@@ -48,6 +48,7 @@ const logoutUserDB = async () => {
 };
 
 const registerUserDB = async (userData) => {
+  let result = false;
   const { email, password } = userData;
   try {
     const { data, error } = await supabaseConnection.auth.signUp({
@@ -55,10 +56,9 @@ const registerUserDB = async (userData) => {
       password,
     });
 
-    if (error) {
-      return false;
-    }
-    return data;
+    if (error) { result = false; } else { result = data; }
+
+    return result;
   } catch (error) {
     return false;
   }
