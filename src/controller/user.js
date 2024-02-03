@@ -6,6 +6,7 @@ import supabaseConnection from '../config/supabase';
 
 const loginUserDB = async (userData) => {
   const { email, password } = userData;
+  let response;
   try {
     const { data, error } = await supabaseConnection.auth.signInWithPassword({
       email,
@@ -13,10 +14,12 @@ const loginUserDB = async (userData) => {
     });
 
     if (error) {
-      return false;
+      response = false;
+    } else {
+      response = data;
     }
 
-    return data;
+    return response;
   } catch (error) {
     return false;
   }
@@ -24,11 +27,14 @@ const loginUserDB = async (userData) => {
 
 const getUserDB = async () => {
   try {
+    let response;
     const { data, error } = await supabaseConnection.auth.getUser();
     if (error) {
-      return false;
+      response = false;
+    } else {
+      response = data.user;
     }
-    return data.user;
+    return response;
   } catch (error) {
     return false;
   }
@@ -36,12 +42,16 @@ const getUserDB = async () => {
 
 const logoutUserDB = async () => {
   try {
+    let response;
     const { error } = await supabaseConnection.auth.signOut();
 
     if (error) {
-      return false;
+      response = false;
+    } else {
+      response = true;
     }
-    return true;
+
+    return response;
   } catch (error) {
     return false;
   }

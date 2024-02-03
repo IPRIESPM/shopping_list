@@ -36,41 +36,48 @@ function ShoppingListProvider({ children }) {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
     let response;
+    let data = false;
 
-    if (isEditor() === true) response = await getShoppingListsDbForEditor();
-    else response = await getShoppingListsDb(user.id);
+    if (isEditor() === true) {
+      response = await getShoppingListsDbForEditor();
+    } else {
+      response = await getShoppingListsDb(user.id);
+    }
 
     if (!response) {
       setShoppingLists(defaultShoppingLists);
       setErrorShoppingLists(true);
       setLoadingShoppingLists(false);
-      return defaultShoppingLists;
+      data = defaultShoppingLists;
+    } else {
+      setLoadingShoppingLists(false);
+      setShoppingLists(response);
     }
-
-    setLoadingShoppingLists(false);
-    setShoppingLists(response);
-    return response;
+    return data;
   };
 
   // Funciones para Obtener los productos de una lista de la compra de la base de datos.
   const getProductsByShoppingListID = async (id) => {
+    let data = false;
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
     const result = await getProductsByShoppingListIdBD(id);
     if (!result) {
       setErrorShoppingLists(true);
       setLoadingShoppingLists(false);
-      return false;
+      data = false;
+    } else {
+      setLoadingShoppingLists(false);
+
+      setShoppingListSelected({ ...shoppingListSelected, products: result });
+      data = result;
     }
-
-    setLoadingShoppingLists(false);
-
-    setShoppingListSelected({ ...shoppingListSelected, products: result });
-    return result;
+    return data;
   };
 
   // Funcion para obtener una lista de la compra de la base de datos.
   const getShoppingListByID = async (id) => {
+    let data = false;
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
     const listData = await getShoppingListByIDB(id);
@@ -79,29 +86,31 @@ function ShoppingListProvider({ children }) {
       setLoadingShoppingLists(false);
       return false;
     }
-
     const productsResult = await getProductsByShoppingListID(id);
     if (!productsResult) {
       setErrorShoppingLists(true);
       setLoadingShoppingLists(false);
-      return false;
+      data = false;
+    } else {
+      const listDataWithProducts = { ...listData, products: productsResult };
+      setLoadingShoppingLists(false);
+      setShoppingListSelected(listDataWithProducts);
+      data = listDataWithProducts;
     }
 
-    const listDataWithProducts = { ...listData, products: productsResult };
-    setLoadingShoppingLists(false);
-    setShoppingListSelected(listDataWithProducts);
-    return listDataWithProducts;
+    return data;
   };
 
   // Funcion para obtener el peso de una lista de la compra.
   const getShoppingListWeight = () => {
     let weight = 0;
-    if (!shoppingListSelected || !shoppingListSelected.products) return weight;
-
-    shoppingListSelected.products.forEach((product) => {
-      weight += product.amount * product.product.weight;
-    });
-
+    if (!shoppingListSelected || !shoppingListSelected.products) {
+      weight = 0;
+    } else {
+      shoppingListSelected.products.forEach((product) => {
+        weight += product.amount * product.product.weight;
+      });
+    }
     return weight;
   };
 
@@ -128,6 +137,7 @@ function ShoppingListProvider({ children }) {
 
   // Funcion para crear una lista de la compra.
   const createShoppingList = async (name) => {
+    let data = false;
     setLoadingShoppingLists(true);
     const response = await createShoppingListDB(name, user.id);
 
@@ -135,12 +145,12 @@ function ShoppingListProvider({ children }) {
       setErrorShoppingLists(true);
       setErrorMessage('Error al crear la lista');
       setLoadingShoppingLists(false);
-      return false;
+    } else {
+      setShoppingLists([...shoppingLists, response[0]]);
+      setLoadingShoppingLists(false);
+      data = response;
     }
-
-    setShoppingLists([...shoppingLists, response[0]]);
-    setLoadingShoppingLists(false);
-    return response;
+    return data;
   };
 
   // Funcion para borrar una lista de la compra.

@@ -65,7 +65,7 @@ function AddProductShoppingList({ closeModal }) {
           <hr />
           {
             products.map((product) => (
-              <div className={`product ${productExist(product.id) ? 'disabled' : ''}`}>
+              <div className={`product ${productExist(product.id) ? 'disabled' : ''}`} key={crypto.randomUUID()}>
 
                 <ButtonComponent type="button" icon={<PlusCircle />} action={() => handleAddProduct(product)} />
                 <ProductComponent product={product} />

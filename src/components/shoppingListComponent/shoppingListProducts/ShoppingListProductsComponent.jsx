@@ -11,7 +11,7 @@ function ShoppingListProductsComponent({ products }) {
       {(products && products.length) && (
         <ul>
           {products.map((product) => (
-            <li key={product.product.id}>
+            <li key={crypto.randomUUID()}>
               <ProductComponent product={product.product} amount={product.amount} />
             </li>
           ))}

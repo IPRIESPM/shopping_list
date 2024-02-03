@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import supabaseConnection from '../config/supabase';
 
 /*
@@ -7,15 +8,17 @@ import supabaseConnection from '../config/supabase';
 
 const updateProductDB = async (userData) => {
   try {
+    let response;
     const { data, error } = await supabaseConnection
       .from('product')
       .update(userData)
       .eq('id', userData.id)
       .select();
 
-    if (error) return false;
+    if (error) response = false;
+    else response = data;
 
-    return data;
+    return response;
   } catch (error) {
     return false;
   }
@@ -23,43 +26,49 @@ const updateProductDB = async (userData) => {
 
 const createProductDB = async (userData) => {
   try {
+    let response;
     const { data, error } = await supabaseConnection
       .from('product')
       .insert([userData])
       .select('*');
 
-    if (error) return false;
+    if (error) response = false;
+    else response = data;
 
-    return data;
+    return response;
   } catch (error) {
     return false;
   }
 };
 
 const findProductByIdDB = async (id) => {
+  let response;
   try {
     const { data, error } = await supabaseConnection
       .from('product')
       .select()
       .eq('id', id);
 
-    if (error) return false;
+    if (error) response = false;
+    else response = data[0];
 
-    return data[0];
+    return response;
   } catch (error) {
     return false;
   }
 };
 
 const getProductsDb = async () => {
+  let response;
   try {
     const { data, error } = await supabaseConnection
       .from('product')
       .select('*');
 
-    if (error) return false;
+    if (error) response = false;
+    else response = data;
 
-    return data;
+    return response;
   } catch (error) {
     return false;
   }
@@ -71,41 +80,45 @@ const getProductsFilteredNumericBD = async (
   order,
   search,
 ) => {
-  const { data, error, code } = await supabaseConnection
+  let response;
+  const { data, error } = await supabaseConnection
     .from('product')
     .select('*')
     .order(order, { ascending })
     .lte(filter, search);
 
-  if (error) return false;
+  if (error) response = false;
+  else response = data;
 
-  if (code === '42501') return false;
-
-  return data;
+  return response;
 };
 
 const getProductsFilteredTextBD = async (Ufilter, ascending, order, search) => {
+  let response;
   const { data, error } = await supabaseConnection
     .from('product')
     .select('*')
     .order(order, { ascending })
     .filter(Ufilter, 'ilike', `${search}%`);
 
-  if (error) return false;
+  if (error) response = false;
+  else response = data;
 
-  return data;
+  return response;
 };
 
 const deleteProductDB = async (id) => {
+  let response;
   try {
     const { data, error } = await supabaseConnection
       .from('product')
       .delete()
       .eq('id', id);
 
-    if (error) return false;
+    if (error) response = false;
+    else response = data;
 
-    return data;
+    return response;
   } catch (error) {
     return false;
   }

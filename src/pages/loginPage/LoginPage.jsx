@@ -69,40 +69,40 @@ function LoginPage() {
     if (!data.email || !data.password) {
       setErrorLogin(true);
       setLoading(false);
-      return false;
     }
 
     /*
       Si los datos son correctos, los limpiamos y llamamos
       a la función logIn del contexto.
     */
-    data.email = data.email.trim();
-    data.password = data.password.trim();
+    if (data.email && data.password) {
+      data.email = data.email.trim();
+      data.password = data.password.trim();
 
-    if (!register) {
-      result = await logIn(data);
-    } else {
-      result = await registerUser(data);
-    }
+      if (!register) {
+        result = await logIn(data);
+      } else {
+        result = await registerUser(data);
+      }
 
-    /*
+      /*
       Si el resultado es falso, mostramos un error y salimos
       de la función.
     */
-    if (!result) {
-      setErrorLogin(true);
-      setLoading(false);
-      return false;
-    }
-
-    /*
+      if (!result) {
+        setErrorLogin(true);
+        setLoading(false);
+      } else {
+        /*
       Si el resultado es correcto, limpiamos el formulario,
       el error y el estado de carga y redirigimos al usuario
       a la página de productos.
     */
-    setLoading(false);
-    setErrorLogin(false);
-    return true;
+        setLoading(false);
+        setErrorLogin(false);
+      }
+    }
+    return result;
   };
 
   useEffect(() => {

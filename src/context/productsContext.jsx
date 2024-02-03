@@ -131,6 +131,7 @@ function ProductsProvider({ children }) {
 
   // Función para actualizar un producto.
   const updateProduct = async (product) => {
+    let data = false;
     // Buscamos el producto en el array de productos.
     // Si lo encontramos, lo actualizamos en la base de datos.
     const index = products.findIndex((item) => item.id === product.id);
@@ -140,52 +141,53 @@ function ProductsProvider({ children }) {
       if (!result) {
         setLoading(false);
         setError(true);
-        return false;
+      } else {
+        const newProducts = [...products];
+        newProducts[index] = product;
+        setSelectedProduct(product);
+        setProduct(newProducts);
+        setLoading(false);
+        setError(false);
+        data = true;
       }
-
-      const newProducts = [...products];
-      newProducts[index] = product;
-      setSelectedProduct(product);
-      setProduct(newProducts);
-      setLoading(false);
-      setError(false);
-      return true;
     }
-    return false;
+    return data;
   };
 
   // Función para crear un producto, en la base de datos.
   const createProduct = async (product) => {
+    let data = false;
     setLoading(true);
     const result = await createProductDB(product);
     if (!result) {
       setLoading(false);
       setError(true);
-      return false;
+    } else {
+      const newProducts = [result[0], ...products];
+      setSelectedProduct(result[0]);
+      setProduct(newProducts);
+      setLoading(false);
+      setError(false);
+      data = true;
     }
-
-    const newProducts = [result[0], ...products];
-    setSelectedProduct(result[0]);
-    setProduct(newProducts);
-    setLoading(false);
-    setError(false);
-    return result;
+    return data;
   };
 
   // Función para eliminar un producto, en la base de datos.
   const deleteProduct = () => {
     setLoading(true);
+    let data = false;
     const result = deleteProductDB(selectedProduct.id);
     if (!result) {
       setError(true);
-      return false;
+    } else {
+      getProducts();
+      changeSelectedProduct(null);
+      setLoading(false);
+      setError(false);
+      data = true;
     }
-
-    getProducts();
-    changeSelectedProduct(null);
-    setLoading(false);
-    setError(false);
-    return true;
+    return data;
   };
 
   const values = {
