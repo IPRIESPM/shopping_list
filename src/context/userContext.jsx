@@ -76,7 +76,13 @@ function UserProvider({ children }) {
     const result = await getUserDB();
     return result;
   };
-
+  const isEditor = () => {
+    let result = true;
+    if (user) {
+      result = user.role === 'editor';
+    }
+    return result;
+  };
   /*
     Creamos un objeto con los datos que vamos
     a pasar al contexto, en este caso las relacionadas con el usuario
@@ -88,6 +94,7 @@ function UserProvider({ children }) {
     logIn,
     registerUser,
     getUser,
+    isEditor,
   };
 
   /*

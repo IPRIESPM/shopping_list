@@ -6,12 +6,15 @@ import './filterComponent.css';
 import { Link } from 'react-router-dom';
 import { ProductsContext } from '../../context/productsContext';
 import { getFormData } from '../../utils/utils';
+import { UserContext } from '../../context/userContext';
 
 function FilterComponent() {
   const {
     changeListOrder, orderContext, changeFilterListOrder, filterAscending,
     changeFilterList, filterContext, changeListSearch, searchContext, getProductsFilter,
   } = useContext(ProductsContext);
+
+  const { isEditor } = useContext(UserContext);
 
   const handleForm = (event) => {
     event.preventDefault();
@@ -54,12 +57,12 @@ function FilterComponent() {
         </fieldset>
 
       </section>
-
-      <Link to="/products/new" className="add">
-        Añadir producto
-        <PlusCircle />
-      </Link>
-
+      {isEditor() && (
+        <Link to="/products/new" className="add">
+          Añadir producto
+          <PlusCircle />
+        </Link>
+      )}
     </form>
   );
 }

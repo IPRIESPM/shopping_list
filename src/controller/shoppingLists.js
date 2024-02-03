@@ -14,7 +14,19 @@ const getShoppingListsDb = async (userId) => {
     return false;
   }
 };
+const getShoppingListsDbForEditor = async () => {
+  try {
+    const { data, error } = await supabaseConnection
+      .from('shopping_list')
+      .select('*');
 
+    if (error) return false;
+
+    return data;
+  } catch (error) {
+    return false;
+  }
+};
 const getShoppingListByIDB = async (id) => {
   try {
     const { data, error } = await supabaseConnection
@@ -127,4 +139,5 @@ export {
   addProductToShoppingListDB,
   updateProductAmountDB,
   deleteProductFromShoppingListDB,
+  getShoppingListsDbForEditor,
 };

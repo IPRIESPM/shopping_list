@@ -174,8 +174,13 @@ function LoginPage() {
       {!register && (
         <ul className="test-data">
           Datos de prueba:
+          <p>Editor:</p>
           <li>Usuario: isaacjulianpavon.alu@iespacomolla.es</li>
-          <li>Contraseña: test</li>
+          <li>Contraseña: testtest</li>
+
+          <p>Usuario:</p>
+          <li>Usuario: altaskur@gmail.com</li>
+          <li>Contraseña: testtest</li>
         </ul>
       )}
 

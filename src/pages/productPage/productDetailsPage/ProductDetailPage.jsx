@@ -8,6 +8,7 @@ import './productDetailPage.css';
 import ProductFormComponent from '../../../components/products/productFormComponent/ProductFormComponent';
 import { ModalContext } from '../../../context/modalContext';
 import ModalComponent from '../../../components/modalComponent/ModalComponent';
+import { UserContext } from '../../../context/userContext';
 
 function ProductDetailPage() {
   /*
@@ -29,7 +30,7 @@ function ProductDetailPage() {
   const handleEdit = () => {
     setEditMode(!editMode);
   };
-
+  const { isEditor } = useContext(UserContext);
   const exitEditMode = () => {
     setEditMode(false);
   };
@@ -59,9 +60,9 @@ function ProductDetailPage() {
   return (
     <section className="product-detail-page">
       {modalStatus && <ModalComponent />}
-      { selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
-      { createMode && <h1> Nueva ficha de producto</h1>}
-      { selectedProduct && (
+      {selectedProduct && <h1>{`Ficha de ${selectedProduct.name}`}</h1>}
+      {createMode && <h1> Nueva ficha de producto</h1>}
+      {selectedProduct && (
         <section className="product-detail">
           {!editMode && <ProductComponent product={selectedProduct} />}
           {editMode && (
@@ -70,21 +71,24 @@ function ProductDetailPage() {
               exitEditMode={exitEditMode}
             />
           )}
-          <section className="options">
-            {!editMode && (
-              <button type="button" onClick={changeModal}>
-                <Trash2 />
-              </button>
-            )}
 
-            <button type="button" onClick={handleEdit}>
-              {!editMode ? <Pencil /> : <PencilFill />}
-            </button>
-          </section>
+          {isEditor() && (
+            <section className="options">
+              {!editMode && (
+                <button type="button" onClick={changeModal}>
+                  <Trash2 />
+                </button>
+              )}
+
+              <button type="button" onClick={handleEdit}>
+                {!editMode ? <Pencil /> : <PencilFill />}
+              </button>
+            </section>
+          )}
         </section>
       )}
 
-      { createMode && (
+      {createMode && (
         <ProductFormComponent
           product={null}
           exitEditMode={exitEditMode}

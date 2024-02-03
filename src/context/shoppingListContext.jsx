@@ -11,13 +11,14 @@ import {
   addProductToShoppingListDB,
   updateProductAmountDB,
   deleteProductFromShoppingListDB,
+  getShoppingListsDbForEditor,
 } from '../controller/shoppingLists';
 import { UserContext } from './userContext';
 
 const ShoppingListContext = createContext();
 
 function ShoppingListProvider({ children }) {
-  const { user } = useContext(UserContext);
+  const { user, isEditor } = useContext(UserContext);
   const defaultShoppingLists = [];
   const defaultShoppingListSelected = {
     products: [],
@@ -34,7 +35,10 @@ function ShoppingListProvider({ children }) {
   const getShoppingLists = async () => {
     setLoadingShoppingLists(true);
     setErrorShoppingLists(false);
-    const response = await getShoppingListsDb(user.id);
+    let response;
+
+    if (isEditor() === true) response = await getShoppingListsDbForEditor();
+    else response = await getShoppingListsDb(user.id);
 
     if (!response) {
       setShoppingLists(defaultShoppingLists);

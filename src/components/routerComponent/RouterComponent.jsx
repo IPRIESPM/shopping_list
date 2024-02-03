@@ -14,7 +14,7 @@ function RouterComponent() {
   const { user } = useContext(UserContext);
 
   // Verifica si el usuario está autenticado
-  const isAuthenticated = !!user; // Asumiendo que tu userContext tiene información de autenticación
+  const isAuthenticated = !!user;
 
   return (
     <Routes>
