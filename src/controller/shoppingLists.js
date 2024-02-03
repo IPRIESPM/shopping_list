@@ -7,9 +7,7 @@ const getShoppingListsDb = async (userId) => {
       .select('*')
       .eq('user_id', userId);
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data;
   } catch (error) {
@@ -24,9 +22,7 @@ const getShoppingListByIDB = async (id) => {
       .select()
       .eq('id', id);
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data[0];
   } catch (error) {
@@ -44,9 +40,7 @@ const getProductsByShoppingListIdBD = async (id) => {
     `)
       .eq('shopping_list_id', id);
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data;
   } catch (error) {
@@ -61,9 +55,7 @@ const createShoppingListDB = async (name, user) => {
     )
     .select();
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
 
   return data;
 };
@@ -74,9 +66,7 @@ const deleteShoppingListDB = async (id) => {
     .eq('id', id)
     .select();
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
 
   return data;
 };
@@ -95,9 +85,7 @@ const addProductToShoppingListDB = async (shoppingListId, productDetails) => {
     ])
     .select();
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
 
   return data;
 };
@@ -112,9 +100,7 @@ const updateProductAmountDB = async (shoppingListId, productDetails) => {
     .eq('product_id', id)
     .select();
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
 
   return data;
 };
@@ -127,9 +113,7 @@ const deleteProductFromShoppingListDB = async (shoppingListId, productId) => {
     .eq('product_id', productId)
     .select();
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
 
   return data;
 };

@@ -13,9 +13,7 @@ const updateProductDB = async (userData) => {
       .eq('id', userData.id)
       .select();
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data;
   } catch (error) {
@@ -30,9 +28,7 @@ const createProductDB = async (userData) => {
       .insert([userData])
       .select('*');
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data;
   } catch (error) {
@@ -47,9 +43,7 @@ const findProductByIdDB = async (id) => {
       .select()
       .eq('id', id);
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data[0];
   } catch (error) {
@@ -63,9 +57,7 @@ const getProductsDb = async () => {
       .from('product')
       .select('*');
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data;
   } catch (error) {
@@ -79,15 +71,15 @@ const getProductsFilteredNumericBD = async (
   order,
   search,
 ) => {
-  const { data, error } = await supabaseConnection
+  const { data, error, code } = await supabaseConnection
     .from('product')
     .select('*')
     .order(order, { ascending })
     .lte(filter, search);
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
+
+  if (code === '42501') return false;
 
   return data;
 };
@@ -99,9 +91,7 @@ const getProductsFilteredTextBD = async (Ufilter, ascending, order, search) => {
     .order(order, { ascending })
     .filter(Ufilter, 'ilike', `${search}%`);
 
-  if (error) {
-    return false;
-  }
+  if (error) return false;
 
   return data;
 };
@@ -113,9 +103,7 @@ const deleteProductDB = async (id) => {
       .delete()
       .eq('id', id);
 
-    if (error) {
-      return false;
-    }
+    if (error) return false;
 
     return data;
   } catch (error) {

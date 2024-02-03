@@ -129,8 +129,11 @@ function ShoppingListProvider({ children }) {
 
     if (!response) {
       setErrorShoppingLists(true);
+      setErrorMessage('Error al crear la lista');
+      setLoadingShoppingLists(false);
       return false;
     }
+
     setShoppingLists([...shoppingLists, response[0]]);
     setLoadingShoppingLists(false);
     return response;
