@@ -51,7 +51,7 @@ const createShoppingListDB = async (name, user) => {
   const { data, error } = await supabaseConnection
     .from('shopping_list')
     .insert(
-      [{ name, user_id: user.id }],
+      [{ name, user_id: user }],
     )
     .select();
 

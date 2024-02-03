@@ -8,6 +8,7 @@ import './productFormComponent.css';
 import { ProductsContext } from '../../../context/productsContext';
 import ErrorComponent from '../../errorComponent/ErrorComponent';
 import LoadingComponent from '../../loadingComponent/LoadingComponent';
+import ButtonComponent from '../../buttonComponent/ButtonComponent';
 
 function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
   // Establecemos el producto vacio por defecto.
@@ -111,7 +112,7 @@ function ProductFormComponent({ product, exitEditMode, exitCreateMode }) {
           </fieldset>
         </section>
         <p>
-          <input type="submit" value={createMode ? 'Crear' : 'Modificar'} />
+          <ButtonComponent type="submit" text={createMode ? 'Crear' : 'Modificar'} />
         </p>
       </form>
     </section>
