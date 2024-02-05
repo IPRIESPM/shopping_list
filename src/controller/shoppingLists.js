@@ -32,13 +32,13 @@ const getShoppingListsDbForEditor = async () => {
     return false;
   }
 };
-const getShoppingListByIDB = async (id) => {
+const getShoppingListByIDB = async () => {
   try {
     let response;
     const { data, error } = await supabaseConnection
       .from('shopping_list')
-      .select()
-      .eq('id', id);
+      .select();
+    // .eq('id', id);
 
     if (error) response = false;
     else response = data[0];
