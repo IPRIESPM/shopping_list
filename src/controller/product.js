@@ -2,7 +2,7 @@
 import supabaseConnection from '../config/supabase';
 
 /*
-  conjunto de funciones que se encargan de hacer las consultas a la base de datos
+  Conjunto de funciones que se encargan de hacer las consultas a la base de datos
   y retornar los datos que se necesitan.
 */
 
